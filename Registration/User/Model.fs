@@ -47,28 +47,3 @@ type UserEvent =
       Username: Username
       Data: UserEventData
       Instant: Instant }
-
-module User =
-    let getState (events: UserEvent list) =
-        events
-        |> List.sortBy (fun x -> x.Instant)
-        |> List.fold
-            (fun oldState event ->
-                match oldState, event.Data with
-                | _, RegistrationStarted eventData ->
-                    UserState.InVerification
-                        { VerifyingUser.UserId = event.UserId
-                          Username = event.Username
-                          PhoneNumber = eventData.PhoneNumber
-                          CompletionId = eventData.CompletionId }
-                | InVerification old, RegistrationCompleted eventData ->
-                    UserState.Active
-                        { User.UserId = event.UserId
-                          Username = event.Username
-                          PasswordHash = eventData.PasswordHash
-                          PhoneNumber = old.PhoneNumber
-                          FirstName = eventData.FirstName
-                          LastName = eventData.LastName }
-                | Active user, UserDeactivated -> UserState.Deactivated user
-                | old, _ -> old)
-            UserState.NotExisting

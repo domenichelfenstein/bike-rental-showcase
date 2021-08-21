@@ -9,12 +9,17 @@
     <ItemGroup>
         <Compile Include="Fundamentals.fs" />
         <Compile Include="User\Model.fs" />
+        <Compile Include="User\Storage.fs" />
+        <Compile Include="User\User.fs" />
         <Compile Include="Verification\Model.fs" />
+        <Compile Include="Verification\Storage.fs" />
         <Compile Include="Errors.fs" />
         <Compile Include="Operations\StartRegistration.fs" />
         <Compile Include="Operations\VerifyPhone.fs" />
         <Compile Include="Operations\CompleteRegistration.fs" />
         <Compile Include="WeatherForecast.fs" />
+        <Compile Include="Incoming.fs" />
+        <Compile Include="Facade.fs" />
         <Compile Include="Api.fs" />
     </ItemGroup>
 
