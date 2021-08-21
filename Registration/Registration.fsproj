@@ -7,12 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="Fundamentals.fs" />
+        <Compile Include="User\Model.fs" />
+        <Compile Include="Verification\Model.fs" />
+        <Compile Include="Errors.fs" />
+        <Compile Include="Operations\StartRegistration.fs" />
+        <Compile Include="Operations\VerifyPhone.fs" />
+        <Compile Include="Operations\CompleteRegistration.fs" />
         <Compile Include="WeatherForecast.fs" />
         <Compile Include="Api.fs" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="NodaTime" Version="3.0.0" />
+        <PackageReference Include="FSharpx.Extras" Version="2.5.0" />
+        <PackageReference Include="FsToolkit.ErrorHandling" Version="2.0.0" />
+        <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.0.0" />
     </ItemGroup>
 
 </Project>
