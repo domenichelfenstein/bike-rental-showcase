@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BikeRentalExercise", "BikeRentalExercise\BikeRentalExercise.fsproj", "{40382DEC-8741-45BC-8135-FDD38640BE1C}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WebApi", "WebApi\WebApi.fsproj", "{40382DEC-8741-45BC-8135-FDD38640BE1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
-﻿namespace BikeRentalExercise.Controllers
+﻿namespace BikeRental.WebApi.Controllers
 
 open System
 open Microsoft.AspNetCore.Mvc
-open BikeRentalExercise
+open BikeRental.WebApi
 
 [<ApiController>]
 [<Route("weather")>]
