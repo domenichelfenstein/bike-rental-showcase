@@ -13,3 +13,5 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
             services.GenerateVerificationCode
             services.SendVerificationCode
             getInstant
+
+    member self.Hack = storages.UserEvents

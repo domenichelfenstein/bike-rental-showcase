@@ -1,5 +1,25 @@
 ﻿namespace BikeRental.Registration
 
+type User =
+    { UserId: UserId
+      Username: Username
+      PasswordHash: PasswordHash
+      PhoneNumber: PhoneNumber
+      FirstName: string
+      LastName: string }
+
+type VerifyingUser =
+    { UserId: UserId
+      Username: Username
+      PhoneNumber: PhoneNumber
+      CompletionId: RegistrationCompletionId }
+
+type UserState =
+    | NotExisting
+    | InVerification of VerifyingUser
+    | Active of User
+    | Deactivated of User
+
 module User =
     let projectState (events: UserEvent list) =
         events

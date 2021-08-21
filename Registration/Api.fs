@@ -2,31 +2,26 @@
 
 open System
 open Microsoft.AspNetCore.Mvc
+open FsToolkit.ErrorHandling
 open BikeRental.Registration
 
 [<ApiController>]
-[<Route("weather")>]
-type WeatherForecastController() =
+[<Route("registration")>]
+type RegistrationApiController(facade : RegistrationFacade) =
     inherit ControllerBase()
-
-    let summaries =
-        [| "Freezing"
-           "Bracing"
-           "Chilly"
-           "Cool"
-           "Mild"
-           "Warm"
-           "Balmy"
-           "Hot"
-           "Sweltering"
-           "Scorching" |]
+    [<HttpPost>]
+    [<Route("start")>]
+    member self.Start([<FromBody>] data) =
+        asyncResult {
+            do! facade.StartRegistration
+                    (Guid.NewGuid () |> UserId)
+                    (Guid.NewGuid () |> RegistrationCompletionId)
+                    data
+        }
 
     [<HttpGet>]
-    [<Route("forecast")>]
-    member self.Get() =
-        let rng = System.Random()
-
-        [| for index in 0 .. 4 ->
-               { Date = DateTime.Now.AddDays(float index)
-                 TemperatureC = rng.Next(-20, 55)
-                 Summary = summaries.[rng.Next(summaries.Length)] } |]
+    [<Route("test")>]
+    member self.Test() =
+        async {
+            return! facade.Hack.QueryByUsername (Username "")
+        }

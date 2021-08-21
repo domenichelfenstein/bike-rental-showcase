@@ -12,8 +12,10 @@ open Microsoft.Extensions.Hosting
 type Startup(configuration: IConfiguration) =
     member _.Configuration = configuration
 
-    member _.ConfigureServices(services: IServiceCollection) =
-        let registrationAssemblyPart = typeof<WeatherForecast>.Assembly |> AssemblyPart
+    member self.ConfigureServices(services: IServiceCollection) =
+        let registrationAssemblyPart =
+            typeof<RegistrationFacade>.Assembly
+            |> AssemblyPart
 
         let accountingAssemblyPart = typeof<AccountingId>.Assembly |> AssemblyPart
 
@@ -25,6 +27,11 @@ type Startup(configuration: IConfiguration) =
 
         parts.Add(registrationAssemblyPart)
         parts.Add(accountingAssemblyPart)
+
+        let facades = FacadesCreator.create self.Configuration
+
+        services.AddSingleton<RegistrationFacade> (fun _ -> facades.Registration) |> ignore
+        ()
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
         if (env.IsDevelopment()) then

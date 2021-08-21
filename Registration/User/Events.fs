@@ -8,26 +8,6 @@ type PhoneNumber = PhoneNumber of string
 type PasswordHash = PasswordHash of string
 type RegistrationCompletionId = RegistrationCompletionId of Guid
 
-type User =
-    { UserId: UserId
-      Username: Username
-      PasswordHash: PasswordHash
-      PhoneNumber: PhoneNumber
-      FirstName: string
-      LastName: string }
-
-type VerifyingUser =
-    { UserId: UserId
-      Username: Username
-      PhoneNumber: PhoneNumber
-      CompletionId: RegistrationCompletionId }
-
-type UserState =
-    | NotExisting
-    | InVerification of VerifyingUser
-    | Active of User
-    | Deactivated of User
-
 type RegistrationStartedData =
     { PhoneNumber: PhoneNumber
       CompletionId: RegistrationCompletionId }
