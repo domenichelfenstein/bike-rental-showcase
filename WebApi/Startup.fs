@@ -1,6 +1,7 @@
 namespace BikeRental.WebApi
 
 open BikeRental.Registration
+open BikeRental.WebApi.Controllers
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Mvc.ApplicationParts
@@ -14,10 +15,18 @@ type Startup(configuration: IConfiguration) =
     member _.ConfigureServices(services: IServiceCollection) =
         let registrationAssemblyPart = typeof<WeatherForecast>.Assembly |> AssemblyPart
 
-        services
-            .AddControllers()
-            .PartManager.ApplicationParts.Add(registrationAssemblyPart)
-        |> ignore
+        let accountingAssemblyPart =
+            typeof<AccountingController>.Assembly
+            |> AssemblyPart
+
+        let parts =
+            services
+                .AddControllers()
+                .PartManager
+                .ApplicationParts
+
+        parts.Add(registrationAssemblyPart)
+        parts.Add(accountingAssemblyPart)
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
         if (env.IsDevelopment()) then

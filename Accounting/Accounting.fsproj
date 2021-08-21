@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>BikeRental.Accounting</AssemblyName>
+        <RootNamespace>BikeRental.Accounting</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Controllers\AccountingController.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    </ItemGroup>
+
+</Project>

@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Accounting\Accounting.fsproj" />
       <ProjectReference Include="..\Registration\Registration.fsproj" />
     </ItemGroup>
 
