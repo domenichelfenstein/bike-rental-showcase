@@ -1,7 +1,7 @@
-namespace BikeRental.WebApi
+namespace BikeRental.Starter
 
 open BikeRental.Registration
-open BikeRental.WebApi.Controllers
+open BikeRental.Accounting
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Mvc.ApplicationParts
@@ -15,9 +15,7 @@ type Startup(configuration: IConfiguration) =
     member _.ConfigureServices(services: IServiceCollection) =
         let registrationAssemblyPart = typeof<WeatherForecast>.Assembly |> AssemblyPart
 
-        let accountingAssemblyPart =
-            typeof<AccountingController>.Assembly
-            |> AssemblyPart
+        let accountingAssemblyPart = typeof<AccountingId>.Assembly |> AssemblyPart
 
         let parts =
             services

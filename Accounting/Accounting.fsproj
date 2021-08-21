@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Controllers\AccountingController.fs" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+      <Compile Include="Models.fs" />
+      <Compile Include="Api.fs" />
     </ItemGroup>
 
 </Project>

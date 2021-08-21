@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <AssemblyName>BikeRental.WebApi</AssemblyName>
-        <RootNamespace>BikeRental.WebApi</RootNamespace>
+        <AssemblyName>BikeRental.Starter</AssemblyName>
+        <RootNamespace>BikeRental.Starter</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

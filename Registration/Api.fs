@@ -1,4 +1,4 @@
-﻿namespace BikeRental.WebApi.Controllers
+﻿namespace BikeRental.Registration
 
 open System
 open Microsoft.AspNetCore.Mvc
