@@ -2,7 +2,7 @@
 
 open System
 open Microsoft.AspNetCore.Mvc
-open BikeRental.WebApi
+open BikeRental.Registration
 
 [<ApiController>]
 [<Route("weather")>]

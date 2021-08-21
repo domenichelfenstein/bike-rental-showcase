@@ -1,4 +1,4 @@
-namespace BikeRental.WebApi
+namespace BikeRental.Registration
 
 open System
 

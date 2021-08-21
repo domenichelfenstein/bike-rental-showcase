@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>BikeRental.Registration</AssemblyName>
+        <RootNamespace>BikeRental.Registration</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="WeatherForecast.fs" />
+    </ItemGroup>
+
+</Project>
