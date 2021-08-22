@@ -32,16 +32,27 @@ type Startup(configuration: IConfiguration) =
 
         let facades = FacadesCreator.create self.Configuration
 
-        services.AddSingleton<RegistrationFacade> (fun _ -> facades.Registration) |> ignore
+        services.AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
+        |> ignore
+
         ()
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
         if (env.IsDevelopment()) then
             app.UseDeveloperExceptionPage() |> ignore
 
-        let frontendAssembly = Assembly.Load(AssemblyName("BikeRental.Frontend"))
-        let staticFileOptions = StaticFileOptions()
-        staticFileOptions.FileProvider <- EmbeddedFileProvider(frontendAssembly, "BikeRental.Frontend.wwwroot")
+        let getFileProvider assemblyName =
+            let assembly = Assembly.Load(AssemblyName(assemblyName))
+            EmbeddedFileProvider(assembly, $"{assemblyName}.wwwroot")
+
+        let staticFileOptions =
+            StaticFileOptions(
+                FileProvider =
+                    CompositeFileProvider(
+                        getFileProvider "BikeRental.Registration",
+                        getFileProvider "BikeRental.Accounting"
+                    )
+            )
 
         app
             .UseRouting()
