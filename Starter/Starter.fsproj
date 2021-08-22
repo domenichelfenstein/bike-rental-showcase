@@ -16,7 +16,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Accounting\Accounting.fsproj" />
+      <ProjectReference Include="..\Frontend\Frontend.fsproj" />
       <ProjectReference Include="..\Registration\Registration.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\index.html" />
     </ItemGroup>
 
 </Project>

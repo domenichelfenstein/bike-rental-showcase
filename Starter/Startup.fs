@@ -1,5 +1,6 @@
 namespace BikeRental.Starter
 
+open System.Reflection
 open BikeRental.Registration
 open BikeRental.Accounting
 open Microsoft.AspNetCore.Builder
@@ -7,6 +8,7 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Mvc.ApplicationParts
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.FileProviders
 open Microsoft.Extensions.Hosting
 
 type Startup(configuration: IConfiguration) =
@@ -37,9 +39,12 @@ type Startup(configuration: IConfiguration) =
         if (env.IsDevelopment()) then
             app.UseDeveloperExceptionPage() |> ignore
 
+        let frontendAssembly = Assembly.Load(AssemblyName("BikeRental.Frontend"))
+        let staticFileOptions = StaticFileOptions()
+        staticFileOptions.FileProvider <- EmbeddedFileProvider(frontendAssembly, "BikeRental.Frontend.wwwroot")
+
         app
-            .UseHttpsRedirection()
             .UseRouting()
-            .UseAuthorization()
+            .UseStaticFiles(staticFileOptions)
             .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
         |> ignore

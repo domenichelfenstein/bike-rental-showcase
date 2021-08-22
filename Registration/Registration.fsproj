@@ -19,7 +19,7 @@
         <Compile Include="Operations\CompleteRegistration.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
-        <Compile Include="Api.fs" />
+        <Compile Include="WebApi.fs" />
     </ItemGroup>
 
     <ItemGroup>
