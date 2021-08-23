@@ -15,4 +15,8 @@
       <Compile Include="Api.fs" />
     </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Frontend\**\*" />
+  </ItemGroup>
+
 </Project>

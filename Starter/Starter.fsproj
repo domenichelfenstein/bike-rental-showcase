@@ -7,16 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Accounting\Accounting.fsproj" />
+        <ProjectReference Include="..\Registration\Registration.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Compile Include="InMemoryFakes.fs" />
         <Compile Include="Services.fs" />
         <Compile Include="FacadesCreator.fs" />
         <Compile Include="Startup.fs" />
         <Compile Include="Program.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Accounting\Accounting.fsproj" />
-      <ProjectReference Include="..\Registration\Registration.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
