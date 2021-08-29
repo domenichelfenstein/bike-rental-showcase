@@ -29,8 +29,8 @@
     "strictTemplates": true
   },
   "files": [
-    "./common-frontend/main.ts",
-    "./common-frontend/polyfills.ts"
+    "./main-frontend-app/main.ts",
+    "./main-frontend-app/polyfills.ts"
   ],
   "include": [
     "./**/*.d.ts",

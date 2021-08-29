@@ -20,7 +20,6 @@
         <Compile Include="Services.fs" />
         <Compile Include="FacadesCreator.fs" />
         <Compile Include="Startup.fs" />
-        <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>

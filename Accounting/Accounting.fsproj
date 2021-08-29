@@ -13,10 +13,9 @@
     <ItemGroup>
       <Compile Include="Models.fs" />
       <Compile Include="Api.fs" />
+      <Content Include="Frontend\assets\testbild2.jpg" />
+      <TypeScriptCompile Include="Frontend\accountingPage.component.ts" />
+      <TypeScriptCompile Include="Frontend\accounting.module.ts" />
     </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Frontend\**\*" />
-  </ItemGroup>
 
 </Project>

@@ -6,6 +6,17 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Registration", "Registratio
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Accounting", "Accounting\Accounting.fsproj", "{B3DAD239-6913-4202-9E44-3C05ECA82A68}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Files", "{73DA00C1-E0AC-49D2-9D3E-9D5E8EA1C368}"
+ProjectSection(SolutionItems) = preProject
+	.browserslistrc = .browserslistrc
+	.editorconfig = .editorconfig
+	.gitignore = .gitignore
+	angular.json = angular.json
+	package.json = package.json
+	package-lock.json = package-lock.json
+	tsconfig.json = tsconfig.json
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

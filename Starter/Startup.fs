@@ -47,4 +47,12 @@ type Startup(configuration: IConfiguration) =
                 spa.Options.SourcePath <- "../"
                 spa.UseAngularCliServer("start")
                 ())
-        |> ignore
+
+module Program =
+    [<EntryPoint>]
+    let main args =
+        Host
+            .CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(fun webBuilder -> webBuilder.UseStartup<Startup>() |> ignore)
+            .Build().Run()
+        0
