@@ -4,26 +4,34 @@
         <TargetFramework>net5.0</TargetFramework>
         <AssemblyName>BikeRental.Starter</AssemblyName>
         <RootNamespace>BikeRental.Starter</RootNamespace>
+
+        <WWWRoot>\wwwroot\</WWWRoot>
+        <Outside>..\</Outside>
+        <NodeModules>..\node_modules\</NodeModules>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Accounting\Accounting.fsproj" />
-        <ProjectReference Include="..\Registration\Registration.fsproj" />
+        <ProjectReference Include="..\Accounting\Accounting.fsproj"/>
+        <ProjectReference Include="..\Registration\Registration.fsproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="InMemoryFakes.fs" />
-        <Compile Include="Services.fs" />
-        <Compile Include="FacadesCreator.fs" />
-        <Compile Include="Startup.fs" />
+        <Compile Include="InMemoryFakes.fs"/>
+        <Compile Include="Services.fs"/>
+        <Compile Include="FacadesCreator.fs"/>
+        <Compile Include="Startup.fs"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\index.html" />
-    </ItemGroup>
+    <Target Name="NpmInstall" Condition="!Exists('$(NodeModules)')">
+        <Exec WorkingDirectory="$(Outside)" Command="npm ci" />
+    </Target>
+    <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild" Condition="'$(Configuration)'=='RELEASE'">
+        <RemoveDir Directories="$(WWWRoot)" />
+        <Exec WorkingDirectory="$(Outside)" Command="npm run build"/>
+    </Target>
 
 </Project>

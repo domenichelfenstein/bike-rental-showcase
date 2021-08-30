@@ -1,12 +1,15 @@
 namespace BikeRental.Starter
 
+open System.IO
 open BikeRental.Registration
 open BikeRental.Accounting
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
+open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Mvc.ApplicationParts
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.FileProviders
 open Microsoft.Extensions.Hosting
 open Microsoft.AspNetCore.SpaServices.AngularCli
 
@@ -37,16 +40,33 @@ type Startup(configuration: IConfiguration) =
         ()
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
-        if (env.IsDevelopment()) then
-            app.UseDeveloperExceptionPage() |> ignore
+        let fileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory() + "/wwwroot")
+        let pathString = PathString("")
+
+        let defaultFilesOptions = DefaultFilesOptions()
+        defaultFilesOptions.RequestPath <- pathString
+        defaultFilesOptions.FileProvider <- fileProvider
+        defaultFilesOptions.DefaultFileNames <- [| "index.html" |]
+
+        let staticFileOptions = StaticFileOptions()
+        staticFileOptions.RequestPath <- pathString
+        staticFileOptions.FileProvider <- fileProvider
 
         app
             .UseRouting()
             .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
+#if DEBUG
+            .UseDeveloperExceptionPage()
             .UseSpa(fun spa ->
                 spa.Options.SourcePath <- "../"
                 spa.UseAngularCliServer("start")
                 ())
+#endif
+#if RELEASE
+            .UseDefaultFiles(defaultFilesOptions)
+            .UseStaticFiles(staticFileOptions)
+            .UseSpa(fun spa -> ())
+#endif
 
 module Program =
     [<EntryPoint>]

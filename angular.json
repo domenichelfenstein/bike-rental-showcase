@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "./Starter/wwwroot",
             "index": "./main-frontend-app/index.html",
             "main": "./main-frontend-app/main.ts",
             "polyfills": "./main-frontend-app/polyfills.ts",
@@ -28,7 +28,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "./main-frontend-app/assets",
-              "./Accounting/Frontend/assets",
+              "./Accounting/Frontend/assets"
             ],
             "styles": [
             ],

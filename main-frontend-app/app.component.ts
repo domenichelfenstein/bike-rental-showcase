@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
         <a routerLinkActive="active" [routerLink]="['accounting', 'accountingPage']">Open Accounting-Page</a>
         <router-outlet></router-outlet>
 
-        <img src="common-frontend/assets/testbild.jpg" height="100"/>`
+        <img src="main-frontend-app/assets/testbild.jpg" height="100"/>`
 })
 export class AppComponent {
 }
