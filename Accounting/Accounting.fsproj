@@ -13,7 +13,7 @@
     <ItemGroup>
       <Compile Include="Models.fs" />
       <Compile Include="Api.fs" />
-      <Content Include="Frontend\assets\testbild2.jpg" />
+      <Content Include="Frontend\assets\.gitkeep" />
       <TypeScriptCompile Include="Frontend\accountingPage.component.ts" />
       <TypeScriptCompile Include="Frontend\accounting.module.ts" />
     </ItemGroup>

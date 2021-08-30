@@ -3,20 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { Page1Component } from "./page1.component";
 
 const routes: Routes = [
-    { path: "page1", component: Page1Component },
     {
         path: "accounting",
         loadChildren: () => import("../Accounting/Frontend/accounting.module").then(m => m.AccountingModule)
     },
+    {
+        path: "registration",
+        loadChildren: () => import("../Registration/Frontend/registration.module").then(m => m.RegistrationModule)
+    },
+    { path: '**', redirectTo: "registration/start" }
 ];
 
 @NgModule({
     declarations: [
-        AppComponent,
-        Page1Component
+        AppComponent
     ],
     imports: [
         RouterModule.forRoot(routes),

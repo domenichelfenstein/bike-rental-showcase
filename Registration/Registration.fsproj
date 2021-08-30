@@ -30,4 +30,9 @@
         <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <TypeScriptCompile Include="Frontend\startRegistration.component.ts" />
+      <TypeScriptCompile Include="Frontend\registration.module.ts" />
+    </ItemGroup>
+
 </Project>

@@ -1,92 +1,83 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "bike-rental": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
-      "root": "",
-      "sourceRoot": ".",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "./Starter/wwwroot",
-            "index": "./main-frontend-app/index.html",
-            "main": "./main-frontend-app/main.ts",
-            "polyfills": "./main-frontend-app/polyfills.ts",
-            "tsConfig": "tsconfig.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "./main-frontend-app/assets",
-              "./Accounting/Frontend/assets"
-            ],
-            "styles": [
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "bike-rental": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                "@schematics/angular:application": {
+                    "strict": true
                 }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "./main-frontend-app/environments/environment.ts",
-                  "with": "./main-frontend-app/environments/environment.prod.ts"
+            },
+            "root": "",
+            "sourceRoot": ".",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "./Starter/wwwroot",
+                        "index": "./main-frontend-app/index.html",
+                        "main": "./main-frontend-app/main.ts",
+                        "polyfills": "./main-frontend-app/polyfills.ts",
+                        "tsConfig": "tsconfig.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "./main-frontend-app/assets",
+                            "./Accounting/Frontend/assets"
+                        ],
+                        "styles": [
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "./main-frontend-app/environments/environment.ts",
+                                    "with": "./main-frontend-app/environments/environment.prod.ts"
+                                }
+                            ],
+                            "baseHref": "/frontend",
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "bike-rental:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "bike-rental:build:development",
+                            "port": 4201,
+                            "baseHref": "/frontend"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "bike-rental:build"
+                    }
                 }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
             }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "bike-rental:build:production"
-            },
-            "development": {
-              "browserTarget": "bike-rental:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "bike-rental:build"
-          }
         }
-      }
-    }
-  },
-  "defaultProject": "bike-rental"
+    },
+    "defaultProject": "bike-rental"
 }

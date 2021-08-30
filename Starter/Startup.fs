@@ -53,9 +53,12 @@ type Startup(configuration: IConfiguration) =
         staticFileOptions.FileProvider <- fileProvider
 
         app
-            .UseRouting()
-            .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
+            .UseRouting() |> ignore
+        app
+            .UseEndpoints(fun endpoints ->
+                endpoints.MapControllers() |> ignore) |> ignore
 #if DEBUG
+        app
             .UseDeveloperExceptionPage()
             .UseSpa(fun spa ->
                 spa.Options.SourcePath <- "../"
@@ -63,6 +66,7 @@ type Startup(configuration: IConfiguration) =
                 ())
 #endif
 #if RELEASE
+        app
             .UseDefaultFiles(defaultFilesOptions)
             .UseStaticFiles(staticFileOptions)
             .UseSpa(fun spa -> ())
