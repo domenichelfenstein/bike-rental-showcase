@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Registration
 
 open System
+open BikeRental.Registration.Operations
 open Microsoft.AspNetCore.Mvc
 open FsToolkit.ErrorHandling
 open BikeRental.Registration
@@ -23,5 +24,5 @@ type RegistrationApiController(facade : RegistrationFacade) =
     [<Route("test")>]
     member self.Test() =
         async {
-            return! facade.Hack.QueryByUsername (Username "")
+            return { StartRegistration.Data.Username = Username "" ; StartRegistration.Data.PhoneNumber = PhoneNumber "" }
         }

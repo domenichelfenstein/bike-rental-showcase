@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { PreloadAllModulesStrategy } from "./preloadStrategy";
 
 const routes: Routes = [
     {
@@ -21,10 +22,10 @@ const routes: Routes = [
         AppComponent
     ],
     imports: [
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModulesStrategy }),
         BrowserModule
     ],
-    providers: [],
+    providers: [ ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
