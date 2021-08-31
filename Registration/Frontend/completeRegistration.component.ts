@@ -80,7 +80,7 @@ export class CompleteRegistrationPageComponent {
         this.displayError.next(response instanceof ResultError);
 
         if(response instanceof ResultOk) {
-            console.log("juhu!");
+            await this.router.navigate(["registration", "start"]);
         }
     }
 }

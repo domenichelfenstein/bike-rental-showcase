@@ -4,17 +4,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { PreloadAllModulesStrategy } from "./preloadStrategy";
+import { AuthService } from "./auth.service";
+import { MustBeLoggedInGuard } from "./mustBeLoggedIn.guard";
+import { MustNotBeLoggedInGuard } from "./mustNotBeLoggedIn.guard";
 
 const routes: Routes = [
     {
         path: "accounting",
-        loadChildren: () => import("../Accounting/Frontend/accounting.module").then(m => m.AccountingModule)
+        loadChildren: () => import("../Accounting/Frontend/accounting.module").then(m => m.AccountingModule),
+        canActivate: [MustBeLoggedInGuard]
     },
     {
         path: "registration",
-        loadChildren: () => import("../Registration/Frontend/registration.module").then(m => m.RegistrationModule)
+        loadChildren: () => import("../Registration/Frontend/registration.module").then(m => m.RegistrationModule),
+        canActivate: [MustNotBeLoggedInGuard]
     },
-    { path: '**', redirectTo: "registration/start" }
+    { path: '**', redirectTo: "accounting/accountingPage" }
 ];
 
 @NgModule({
@@ -25,7 +30,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModulesStrategy }),
         BrowserModule
     ],
-    providers: [ ],
+    providers: [ AuthService, MustBeLoggedInGuard, MustNotBeLoggedInGuard ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
