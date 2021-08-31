@@ -17,6 +17,7 @@
         <Compile Include="Operations\StartRegistration.fs" />
         <Compile Include="Operations\VerifyPhone.fs" />
         <Compile Include="Operations\CompleteRegistration.fs" />
+        <Compile Include="Operations\CreateToken.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
         <Compile Include="WebApi.fs" />

@@ -5,6 +5,8 @@ open System.Text.Json
 open System.Text.Json.Serialization
 open BikeRental.Registration
 open BikeRental.Accounting
+open BikeRental.Starter.FakeAuthentication
+open Microsoft.AspNetCore.Authentication
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
@@ -21,6 +23,13 @@ type Startup(configuration: IConfiguration) =
     member _.Configuration = configuration
 
     member self.ConfigureServices(services: IServiceCollection) =
+        services
+            .AddAuthentication()
+            .AddScheme<AuthenticationSchemeOptions, FakeAuthenticationHandler>(FakeSchemeName, (fun _ -> ()))
+        |> ignore
+
+        services.AddAuthorization() |> ignore
+
         let registrationAssemblyPart =
             typeof<RegistrationFacade>.Assembly
             |> AssemblyPart
@@ -30,8 +39,7 @@ type Startup(configuration: IConfiguration) =
         let parts =
             services
                 .AddControllers()
-                .AddJsonOptions(fun options ->
-                    options.JsonSerializerOptions.Converters.Add(JsonFSharpConverter()))
+                .AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add(JsonFSharpConverter()))
                 .PartManager
                 .ApplicationParts
 
@@ -40,13 +48,15 @@ type Startup(configuration: IConfiguration) =
 
         let facades = FacadesCreator.create self.Configuration
 
-        services
-            .AddSingleton<RegistrationFacade>(fun _ -> facades.Registration) |> ignore
+        services.AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
+        |> ignore
 
         ()
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
-        let fileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory() + "/wwwroot")
+        let fileProvider =
+            new PhysicalFileProvider(Directory.GetCurrentDirectory() + "/wwwroot")
+
         let pathString = PathString("")
 
         let defaultFilesOptions = DefaultFilesOptions()
@@ -59,10 +69,13 @@ type Startup(configuration: IConfiguration) =
         staticFileOptions.FileProvider <- fileProvider
 
         app
-            .UseRouting() |> ignore
-        app
-            .UseEndpoints(fun endpoints ->
-                endpoints.MapControllers() |> ignore) |> ignore
+            .UseRouting()
+            .UseAuthentication()
+            .UseAuthorization()
+        |> ignore
+
+        app.UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
+        |> ignore
 #if DEBUG
         app
             .UseDeveloperExceptionPage()
@@ -84,5 +97,7 @@ module Program =
         Host
             .CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(fun webBuilder -> webBuilder.UseStartup<Startup>() |> ignore)
-            .Build().Run()
+            .Build()
+            .Run()
+
         0

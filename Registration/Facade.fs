@@ -26,3 +26,9 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
             storages.UserEvents.PersistEvent
             services.GetPasswordHash
             getInstant
+
+    member self.CreateToken =
+        CreateToken.execute
+            (User.getUser storages.UserEvents)
+            services.GetPasswordHash
+            services.CreateAuthToken

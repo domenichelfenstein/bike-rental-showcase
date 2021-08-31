@@ -1,8 +1,10 @@
 ﻿namespace BikeRental.Accounting
 
+open Microsoft.AspNetCore.Authorization
 open Microsoft.AspNetCore.Mvc
 
 [<ApiController>]
+[<Authorize(AuthenticationSchemes = "FakeAuthenticationScheme")>]
 [<Route("accounting")>]
 type AccountingController() =
     inherit ControllerBase()

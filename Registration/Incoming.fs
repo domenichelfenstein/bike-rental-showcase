@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Registration
 
+open BikeRental.Registration.Operations
+
 type RegistrationStorages =
     { UserEvents: UserEventStorage
       OpenVerifications: OpenVerificationStorage }
@@ -23,4 +25,5 @@ type RegistrationServices = {
     SendVerificationCode : SendVerificationCode
     GenerateVerificationCode : GenerateVerificationCode
     GetPasswordHash : string -> PasswordHash
+    CreateAuthToken : User -> AuthToken
 }

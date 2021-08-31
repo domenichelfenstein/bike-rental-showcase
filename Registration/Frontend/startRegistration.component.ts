@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
-import { FSharpResult, ResultError, ResultOk } from "../../Starter/CommonTypes";
-import { ngPost } from "../../main-frontend-app/ngFetch";
+import { ResultError, ResultOk } from "../../Starter/CommonTypes";
+import { ngGet, ngPost } from "../../main-frontend-app/ngFetch";
 import { Router } from "@angular/router";
 
 @Component({
@@ -42,6 +42,7 @@ export class StartRegistrationPageComponent {
     constructor(
         private router: Router
     ) {
+        ngGet<number[]>("/accounting/test", { "Authorization": "thisIsAFakeToken+Blubb+X+Y" }).then(console.log);
     }
 
     public register = async () => {

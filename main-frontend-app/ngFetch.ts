@@ -1,14 +1,16 @@
 ﻿import { FSharpResult, ResultOk, ResultError, Result } from "../Starter/CommonTypes";
 
-export const ngPost = async <TOut = null>(url: string, body: any) : Promise<Result<TOut>> => {
+export const ngPost = async <TOut = null>(url: string, body: any, headers: HeadersInit | undefined = undefined) : Promise<Result<TOut>> => {
+    const defaultHeaders: HeadersInit = {
+        "Content-Type": "application/json"
+    }
+    const mergedHeaders = headers == undefined ? defaultHeaders : Object.assign(defaultHeaders, headers);
     const response = await fetch(
         url,
         {
             method: "POST",
             body: JSON.stringify(body),
-            headers: {
-                "Content-Type": "application/json"
-            }
+            headers: mergedHeaders
         });
     const fsharpResult = <FSharpResult<TOut>>await response.json();
 
@@ -17,4 +19,18 @@ export const ngPost = async <TOut = null>(url: string, body: any) : Promise<Resu
     } else {
         return new ResultError(<any>fsharpResult.Fields[0]);
     }
+}
+
+export const ngGet = async <TOut>(url: string, headers: HeadersInit | undefined = undefined) : Promise<TOut> => {
+    const defaultHeaders: HeadersInit = {
+        "Content-Type": "application/json"
+    }
+    const mergedHeaders = headers == undefined ? defaultHeaders : Object.assign(defaultHeaders, headers);
+    const response = await fetch(
+        url,
+        {
+            method: "GET",
+            headers: mergedHeaders
+        });
+    return await response.json();
 }
