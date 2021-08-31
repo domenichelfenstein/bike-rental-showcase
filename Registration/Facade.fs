@@ -14,4 +14,8 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
             services.SendVerificationCode
             getInstant
 
-    member self.Hack = storages.UserEvents
+    member self.VerifyPhone =
+        VerifyPhone.execute
+            (User.getUser storages.UserEvents)
+            storages.OpenVerifications.Query
+            storages.OpenVerifications.Remove

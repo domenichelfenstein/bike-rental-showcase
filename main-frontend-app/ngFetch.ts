@@ -1,4 +1,6 @@
-﻿export const ngPost = async <TOut>(url: string, body: any) : Promise<TOut> => {
+﻿import { FSharpResult, ResultOk, ResultError, Result } from "../Starter/CommonTypes";
+
+export const ngPost = async <TOut = null>(url: string, body: any) : Promise<Result<TOut>> => {
     const response = await fetch(
         url,
         {
@@ -8,6 +10,11 @@
                 "Content-Type": "application/json"
             }
         });
-    const json = await response.json();
-    return <TOut>json;
+    const fsharpResult = <FSharpResult<TOut>>await response.json();
+
+    if(fsharpResult.Case == "Ok") {
+        return new ResultOk<TOut>(<any>fsharpResult.Fields[0]);
+    } else {
+        return new ResultError(<any>fsharpResult.Fields[0]);
+    }
 }
