@@ -4,3 +4,5 @@ type RegistrationError =
     | UsernameAlreadyTaken
     | UserNotInVerificationProcess
     | WrongVerificationCode
+    | WrongCompletionId
+    | UserNotFound

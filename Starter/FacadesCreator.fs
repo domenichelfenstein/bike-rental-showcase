@@ -10,7 +10,8 @@ module FacadesCreator =
         let registrationServices =
             { RegistrationServices.GenerateVerificationCode = Fakes.generateVerificationCode
               GetNodaInstant = Services.getNodaInstant
-              SendVerificationCode = Fakes.sendVerificationCode }
+              SendVerificationCode = Fakes.sendVerificationCode
+              GetPasswordHash = Fakes.hashPassword }
 
         let registrationFacade =
             RegistrationFacade(

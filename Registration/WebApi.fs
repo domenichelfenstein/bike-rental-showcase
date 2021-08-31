@@ -20,3 +20,8 @@ type RegistrationApiController(facade: RegistrationFacade) =
     [<Route("verify")>]
     member self.Verify([<FromBody>] data) =
         asyncResult { return! facade.VerifyPhone data }
+
+    [<HttpPost>]
+    [<Route("complete")>]
+    member self.Start([<FromBody>] data) =
+        asyncResult { do! facade.CompleteRegistration data }

@@ -33,6 +33,7 @@
     <ItemGroup>
       <TypeScriptCompile Include="Frontend\startRegistration.component.ts" />
       <TypeScriptCompile Include="Frontend\verifyPhone.component.ts" />
+      <TypeScriptCompile Include="Frontend\completeRegistration.component.ts" />
       <TypeScriptCompile Include="Frontend\registration.module.ts" />
     </ItemGroup>
 

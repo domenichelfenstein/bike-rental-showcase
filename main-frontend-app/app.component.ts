@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
         </div>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    styleUrls: [ "app.component.scss" ]
+    styleUrls: [ "global.style.scss" ]
 })
 export class AppComponent {
     public sidebarActive = false;

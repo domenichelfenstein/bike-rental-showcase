@@ -22,4 +22,5 @@ type RegistrationServices = {
     GetNodaInstant : unit -> NodaTime.Instant
     SendVerificationCode : SendVerificationCode
     GenerateVerificationCode : GenerateVerificationCode
+    GetPasswordHash : string -> PasswordHash
 }

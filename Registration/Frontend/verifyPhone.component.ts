@@ -19,7 +19,7 @@ import { map } from "rxjs/operators";
                 <div class="form-group">
                     <label class="form-label" for="userName">Username</label>
                     <input [ngModel]="userName | async" (ngModelChange)="changeUserName($event)" name="userName"
-                           class="form-input" type="tel" id="userName"
+                           class="form-input" type="text" id="userName"
                            required>
                 </div>
                 <div class="form-group">
@@ -28,10 +28,12 @@ import { map } from "rxjs/operators";
                            id="verificationCode"
                            required>
                 </div>
-                <button class="btn btn-primary" *ngIf="userName | async as $phoneNumber"
-                        (click)="verify($phoneNumber)" [disabled]="form.invalid || form.untouched">
-                    Verify
-                </button>
+                <div class="card-footer">
+                    <button class="btn btn-primary" *ngIf="userName | async as $username"
+                            (click)="verify($username)" [disabled]="form.invalid || form.untouched">
+                        Verify
+                    </button>
+                </div>
             </div>
         </form>
     `,
@@ -43,14 +45,14 @@ export class VerifiyPhonePageComponent {
     public verificationCode = "";
 
     constructor(
-        activatedRoute : ActivatedRoute,
+        activatedRoute: ActivatedRoute,
         private router: Router
     ) {
         this.userName = activatedRoute.params.pipe(map(x => x.username));
     }
 
     changeUserName = async (userName: string) => {
-        await this.router.navigate([ "registration", "verify", userName ]);
+        await this.router.navigate(["registration", "verify", userName]);
     }
 
     public verify = async (userName: string) => {
@@ -59,8 +61,8 @@ export class VerifiyPhonePageComponent {
             { "Username": userName, "VerificationCode": this.verificationCode });
         this.displayError.next(response instanceof ResultError);
 
-        if(response instanceof ResultOk) {
-            console.log("id", response.value);
+        if (response instanceof ResultOk) {
+            await this.router.navigate(["registration", "complete", userName, response.value]);
         }
     }
 }
