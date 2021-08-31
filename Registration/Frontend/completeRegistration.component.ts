@@ -1,7 +1,7 @@
 ﻿import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject, Observable } from "rxjs";
 import { ResultError, ResultOk } from "../../Starter/CommonTypes";
-import { ngPost } from "../../main-frontend-app/ngFetch";
+import { fetchPost } from "../../main-frontend-app/ngFetch";
 import { ActivatedRoute, Router } from "@angular/router";
 import { map } from "rxjs/operators";
 
@@ -74,7 +74,7 @@ export class CompleteRegistrationPageComponent {
     }
 
     public complete = async ([username, completionId]: [string, string]) => {
-        const response = await ngPost(
+        const response = await fetchPost(
             "/registration/complete",
             { "Username": username, "CompletionId": completionId, "FirstName": this.firstName, "LastName": this.lastName, "Password": this.password1 });
         this.displayError.next(response instanceof ResultError);

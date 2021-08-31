@@ -1,7 +1,7 @@
 ﻿import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject, Observable } from "rxjs";
 import { ResultError, ResultOk } from "../../Starter/CommonTypes";
-import { ngPost } from "../../main-frontend-app/ngFetch";
+import { fetchPost } from "../../main-frontend-app/ngFetch";
 import { ActivatedRoute, Router } from "@angular/router";
 import { map } from "rxjs/operators";
 
@@ -56,7 +56,7 @@ export class VerifiyPhonePageComponent {
     }
 
     public verify = async (userName: string) => {
-        const response = await ngPost<string>(
+        const response = await fetchPost<string>(
             "/registration/verify",
             { "Username": userName, "VerificationCode": this.verificationCode });
         this.displayError.next(response instanceof ResultError);

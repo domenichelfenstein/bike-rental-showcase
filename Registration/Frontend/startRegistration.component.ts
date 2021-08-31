@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { ResultError, ResultOk } from "../../Starter/CommonTypes";
-import { ngPost } from "../../main-frontend-app/ngFetch";
+import { fetchPost } from "../../main-frontend-app/ngFetch";
 import { Router } from "@angular/router";
 import { AuthService } from "../../main-frontend-app/auth.service";
 
@@ -9,7 +9,7 @@ import { AuthService } from "../../main-frontend-app/auth.service";
     template: `
         <div class="column col-8 col-mx-auto card">
             <div class="columns card-body">
-                <form #loginForm="ngForm" class="column col-6">
+                <form #loginForm="ngForm" class="column col-6" (submit)="login()">
                     <h5>Login</h5>
                     <div class="toast toast-error" *ngIf="displayLoginError | async">
                         <button class="btn btn-clear float-right"
@@ -28,14 +28,14 @@ import { AuthService } from "../../main-frontend-app/auth.service";
                                required>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary" (click)="login()"
+                        <button class="btn btn-primary" type="submit"
                                 [disabled]="loginForm.invalid || loginForm.untouched">
                             Login
                         </button>
                     </div>
                 </form>
                 <div class="divider-vert" data-content="OR"></div>
-                <form #regForm="ngForm" class="column">
+                <form #regForm="ngForm" class="column" (submit)="register()">
                     <h5>Registration</h5>
                     <div class="toast toast-error" *ngIf="displayRegistrationError | async">
                         <button class="btn btn-clear float-right"
@@ -55,7 +55,7 @@ import { AuthService } from "../../main-frontend-app/auth.service";
                                required>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary" (click)="register()"
+                        <button class="btn btn-primary" type="submit"
                                 [disabled]="regForm.invalid || regForm.untouched">
                             Register
                         </button>
@@ -81,7 +81,7 @@ export class StartRegistrationPageComponent {
     }
 
     public register = async () => {
-        const response = await ngPost(
+        const response = await fetchPost(
             "/registration/start",
             { "PhoneNumber": this.phoneNumber, "Username": this.regUsername });
         this.displayRegistrationError.next(response instanceof ResultError);
