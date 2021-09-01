@@ -24,6 +24,7 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
         CompleteRegistration.execute
             (User.getUser storages.UserEvents)
             storages.UserEvents.PersistEvent
+            services.CreateWallet
             services.GetPasswordHash
             getInstant
 

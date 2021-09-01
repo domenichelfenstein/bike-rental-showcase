@@ -26,4 +26,5 @@ type RegistrationServices = {
     GenerateVerificationCode : GenerateVerificationCode
     GetPasswordHash : string -> PasswordHash
     CreateAuthToken : User -> AuthToken
+    CreateWallet : UserId -> Async<Result<unit, obj>>
 }

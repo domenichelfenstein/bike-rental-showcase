@@ -7,3 +7,4 @@ type RegistrationError =
     | WrongCompletionId
     | UserNotFound
     | WrongPassword
+    | ExternalError
