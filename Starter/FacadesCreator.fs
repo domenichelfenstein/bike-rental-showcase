@@ -19,12 +19,15 @@ module Adapters =
             { CreateWallet.Data.UserId = BikeRental.Accounting.UserId userId }
 
 module FacadesCreator =
+
     let create (_configuration: IConfiguration) =
+        let uiChangedEvent = Event<string>()
+
         let accountingServices =
             { AccountingServices.GetNodaInstant = Services.getNodaInstant }
 
         let accountingFacade =
-            AccountingFacade(accountingServices, (AccountingStorageCreator.create AccountingStorageContext.InMemory))
+            AccountingFacade(accountingServices, (AccountingStorageCreator.create AccountingStorageContext.InMemory), uiChangedEvent)
 
         let registrationServices =
             { RegistrationServices.GenerateVerificationCode = Fakes.generateVerificationCode
@@ -40,8 +43,7 @@ module FacadesCreator =
                 (RegistrationStorageCreator.create RegistrationStorageContext.InMemory)
             )
 
-        let rentalServices =
-            { RentalServices.GetNodaInstant = Services.getNodaInstant }
+        let rentalServices = { RentalServices.GetNodaInstant = Services.getNodaInstant }
 
         let rentalFacade =
             RentalFacade(rentalServices, (RentalStorageCreator.create RentalStorageContext.InMemory))

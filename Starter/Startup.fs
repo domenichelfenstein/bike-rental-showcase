@@ -73,10 +73,10 @@ type Startup(configuration: IConfiguration) =
             .UseRouting()
             .UseAuthentication()
             .UseAuthorization()
+            .UseWebSockets()
+            .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
         |> ignore
 
-        app.UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
-        |> ignore
 #if DEBUG
         app
             .UseDeveloperExceptionPage()

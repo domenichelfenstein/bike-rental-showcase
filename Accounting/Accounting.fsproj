@@ -16,6 +16,7 @@
 
     <ItemGroup>
         <Compile Include="Fundamentals.fs" />
+        <Compile Include="TaskBuilder.fs" />
         <Compile Include="Models.fs" />
         <Compile Include="Wallet\Events.fs" />
         <Compile Include="Wallet\Storage.fs" />
@@ -24,6 +25,7 @@
         <Compile Include="Features\QueryWallet.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
+        <Compile Include="WebSocket.fs" />
         <Compile Include="WebApi.fs" />
         <Content Include="Frontend\assets\.gitkeep" />
         <TypeScriptCompile Include="Frontend\deposit.page.ts" />
