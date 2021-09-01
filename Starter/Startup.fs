@@ -1,7 +1,6 @@
 namespace BikeRental.Starter
 
 open System.IO
-open System.Text.Json
 open System.Text.Json.Serialization
 open BikeRental.Registration
 open BikeRental.Accounting
@@ -10,14 +9,12 @@ open Microsoft.AspNetCore.Authentication
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Http
-open Microsoft.AspNetCore.Mvc
 open Microsoft.AspNetCore.Mvc.ApplicationParts
 open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.FileProviders
 open Microsoft.Extensions.Hosting
 open Microsoft.AspNetCore.SpaServices.AngularCli
-open Newtonsoft.Json
 
 type Startup(configuration: IConfiguration) =
     member _.Configuration = configuration
@@ -48,7 +45,9 @@ type Startup(configuration: IConfiguration) =
 
         let facades = FacadesCreator.create self.Configuration
 
-        services.AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
+        services
+            .AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
+            .AddSingleton<AccountingFacade>(fun _ -> facades.Accounting)
         |> ignore
 
         ()

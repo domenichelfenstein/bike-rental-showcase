@@ -24,6 +24,7 @@ type UserEventData =
 
 type UserEvent =
     { UserId: UserId
+      EventId : Guid
       Username: Username
       Data: UserEventData
       Instant: Instant }

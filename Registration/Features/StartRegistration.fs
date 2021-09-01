@@ -1,5 +1,6 @@
-﻿namespace BikeRental.Registration.Operations
+﻿namespace BikeRental.Registration.Features
 
+open System
 open BikeRental.Registration
 open FsToolkit.ErrorHandling
 
@@ -31,6 +32,7 @@ module StartRegistration =
             do!
                 persistUserEvent
                     { UserEvent.UserId = userId
+                      EventId = Guid.NewGuid()
                       Username = data.Username
                       Data =
                           UserEventData.RegistrationStarted

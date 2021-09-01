@@ -1,6 +1,6 @@
 ﻿namespace BikeRental.Registration
 
-open BikeRental.Registration.Operations
+open BikeRental.Registration.Features
 
 type RegistrationStorages =
     { UserEvents: UserEventStorage

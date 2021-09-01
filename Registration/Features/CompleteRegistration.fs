@@ -1,5 +1,6 @@
-﻿namespace BikeRental.Registration.Operations
+﻿namespace BikeRental.Registration.Features
 
+open System
 open BikeRental.Registration
 open FSharpx
 open FsToolkit.ErrorHandling
@@ -37,6 +38,7 @@ module CompleteRegistration =
             do!
                 persistUserEvent
                     { UserEvent.UserId = user.UserId
+                      EventId = Guid.NewGuid()
                       Username = user.Username
                       Data =
                           UserEventData.RegistrationCompleted

@@ -1,9 +1,10 @@
 ﻿namespace BikeRental.Starter
 
+open BikeRental.Accounting
 open BikeRental.Registration
 open Microsoft.Extensions.Configuration
 
-type Facades = { Registration: RegistrationFacade }
+type Facades = { Registration: RegistrationFacade ; Accounting: AccountingFacade }
 
 module FacadesCreator =
     let create (_configuration: IConfiguration) =
@@ -20,4 +21,12 @@ module FacadesCreator =
                 (RegistrationStorageCreator.create RegistrationStorageContext.InMemory)
             )
 
-        { Registration = registrationFacade }
+        let accountingServices =
+            { AccountingServices.GetNodaInstant = Services.getNodaInstant }
+
+        let accountingFacade =
+            AccountingFacade(
+                accountingServices,
+                (AccountingStorageCreator.create AccountingStorageContext.InMemory))
+
+        { Registration = registrationFacade ; Accounting = accountingFacade }

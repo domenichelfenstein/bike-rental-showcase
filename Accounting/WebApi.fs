@@ -1,15 +1,15 @@
 ﻿namespace BikeRental.Accounting
 
+open System
 open Microsoft.AspNetCore.Authorization
 open Microsoft.AspNetCore.Mvc
 
 [<ApiController>]
 [<Authorize(AuthenticationSchemes = "FakeAuthenticationScheme")>]
 [<Route("accounting")>]
-type AccountingController() =
+type AccountingController(facade: AccountingFacade) =
     inherit ControllerBase()
 
     [<HttpGet>]
-    [<Route("test")>]
-    member self.Get() =
-        [| 1 ; 2 ; 3 |]
+    [<Route("wallet/{userId}")>]
+    member self.Get([<FromRoute>] userId: Guid) = facade.GetWallet (UserId userId)

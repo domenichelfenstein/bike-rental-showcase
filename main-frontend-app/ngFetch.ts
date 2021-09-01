@@ -7,6 +7,14 @@ const mergeHeaders = (headers: HeadersInit | undefined = undefined) => {
     return headers == undefined ? defaultHeaders : Object.assign(defaultHeaders, headers);
 }
 
+const parseFSharpResult = <TOut>(fsharpResult: FSharpResult<TOut>) : Result<TOut> => {
+    if(fsharpResult.Case == "Ok") {
+        return new ResultOk<TOut>(<any>fsharpResult.Fields[0]);
+    } else {
+        return new ResultError(<any>fsharpResult.Fields[0]);
+    }
+}
+
 export const fetchPost = async <TOut = null>(url: string, body: any, headers: HeadersInit | undefined = undefined) : Promise<Result<TOut>> => {
     const response = await fetch(
         url,
@@ -15,13 +23,8 @@ export const fetchPost = async <TOut = null>(url: string, body: any, headers: He
             body: JSON.stringify(body),
             headers: mergeHeaders(headers)
         });
-    const fsharpResult = <FSharpResult<TOut>>await response.json();
 
-    if(fsharpResult.Case == "Ok") {
-        return new ResultOk<TOut>(<any>fsharpResult.Fields[0]);
-    } else {
-        return new ResultError(<any>fsharpResult.Fields[0]);
-    }
+    return parseFSharpResult(await response.json());
 }
 
 export const fetchGet = async <TOut>(url: string, headers: HeadersInit | undefined = undefined) : Promise<TOut> => {
@@ -32,4 +35,14 @@ export const fetchGet = async <TOut>(url: string, headers: HeadersInit | undefin
             headers: mergeHeaders(headers)
         });
     return await response.json();
+}
+
+export const fetchGetResult = async <TOut>(url: string, headers: HeadersInit | undefined = undefined) : Promise<Result<TOut>> => {
+    const response = await fetch(
+        url,
+        {
+            method: "GET",
+            headers: mergeHeaders(headers)
+        });
+    return parseFSharpResult(await response.json());
 }

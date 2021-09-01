@@ -1,4 +1,4 @@
-﻿namespace BikeRental.Registration.Operations
+﻿namespace BikeRental.Registration.Features
 
 open BikeRental.Registration
 open FSharpx

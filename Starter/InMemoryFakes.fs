@@ -3,7 +3,7 @@
 open System.Security.Cryptography
 open System.Text
 open BikeRental.Registration
-open BikeRental.Registration.Operations
+open BikeRental.Registration.Features
 
 // It goes without saying that nothing in this file must ever be used in production!!!
 module Fakes =
@@ -24,6 +24,7 @@ module Fakes =
 
     let createAuthToken (user: User) =
         let username = user.Username |> (fun (Username u) -> u)
-        let result = $"thisIsAFakeToken+{username}+{user.FirstName}+{user.LastName}"
+        let userId = user.UserId |> (fun (UserId u) -> u.ToString())
+        let result = $"thisIsAFakeToken+{username}+{userId}"
 
         AuthToken result

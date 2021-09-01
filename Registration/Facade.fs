@@ -1,6 +1,6 @@
 ﻿namespace BikeRental.Registration
 
-open BikeRental.Registration.Operations
+open BikeRental.Registration.Features
 
 type RegistrationFacade(services: RegistrationServices, storages: RegistrationStorages) =
     let getInstant = services.GetNodaInstant >> Instant

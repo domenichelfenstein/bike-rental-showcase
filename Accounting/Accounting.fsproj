@@ -7,15 +7,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="NodaTime" Version="3.0.0" />
+        <PackageReference Include="FSharpx.Extras" Version="2.5.0" />
+        <PackageReference Include="FsToolkit.ErrorHandling" Version="2.0.0" />
+        <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="Models.fs" />
-      <Compile Include="Api.fs" />
-      <Content Include="Frontend\assets\.gitkeep" />
-      <TypeScriptCompile Include="Frontend\accountingPage.component.ts" />
-      <TypeScriptCompile Include="Frontend\accounting.module.ts" />
+        <Compile Include="Fundamentals.fs" />
+        <Compile Include="Models.fs" />
+        <Compile Include="Wallet\Events.fs" />
+        <Compile Include="Wallet\Storage.fs" />
+        <Compile Include="Wallet\Wallet.fs" />
+        <Compile Include="Features\CreateWallet.fs" />
+        <Compile Include="Features\QueryWallet.fs" />
+        <Compile Include="Incoming.fs" />
+        <Compile Include="Facade.fs" />
+        <Compile Include="WebApi.fs" />
+        <Content Include="Frontend\assets\.gitkeep" />
+        <TypeScriptCompile Include="Frontend\accountingPage.component.ts" />
+        <TypeScriptCompile Include="Frontend\accounting.module.ts" />
     </ItemGroup>
 
 </Project>

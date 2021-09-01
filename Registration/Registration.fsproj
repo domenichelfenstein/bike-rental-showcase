@@ -14,10 +14,10 @@
         <Compile Include="Verification\Model.fs" />
         <Compile Include="Verification\Storage.fs" />
         <Compile Include="Errors.fs" />
-        <Compile Include="Operations\StartRegistration.fs" />
-        <Compile Include="Operations\VerifyPhone.fs" />
-        <Compile Include="Operations\CompleteRegistration.fs" />
-        <Compile Include="Operations\CreateToken.fs" />
+        <Compile Include="Features\StartRegistration.fs" />
+        <Compile Include="Features\VerifyPhone.fs" />
+        <Compile Include="Features\CompleteRegistration.fs" />
+        <Compile Include="Features\CreateToken.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
         <Compile Include="WebApi.fs" />
