@@ -4,11 +4,13 @@ open System
 open BikeRental.Accounting
 open BikeRental.Accounting.Features
 open BikeRental.Registration
+open BikeRental.Rental
 open Microsoft.Extensions.Configuration
 
 type Facades =
     { Registration: RegistrationFacade
-      Accounting: AccountingFacade }
+      Accounting: AccountingFacade
+      Rental: RentalFacade }
 
 module Adapters =
     let createWallet (facade: AccountingFacade) (BikeRental.Registration.UserId userId) =
@@ -38,5 +40,12 @@ module FacadesCreator =
                 (RegistrationStorageCreator.create RegistrationStorageContext.InMemory)
             )
 
+        let rentalServices =
+            { RentalServices.GetNodaInstant = Services.getNodaInstant }
+
+        let rentalFacade =
+            RentalFacade(rentalServices, (RentalStorageCreator.create RentalStorageContext.InMemory))
+
         { Registration = registrationFacade
-          Accounting = accountingFacade }
+          Accounting = accountingFacade
+          Rental = rentalFacade }

@@ -4,6 +4,7 @@ open System.IO
 open System.Text.Json.Serialization
 open BikeRental.Registration
 open BikeRental.Accounting
+open BikeRental.Rental
 open BikeRental.Starter.FakeAuthentication
 open Microsoft.AspNetCore.Authentication
 open Microsoft.AspNetCore.Builder
@@ -48,6 +49,7 @@ type Startup(configuration: IConfiguration) =
         services
             .AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
             .AddSingleton<AccountingFacade>(fun _ -> facades.Accounting)
+            .AddSingleton<RentalFacade>(fun _ -> facades.Rental)
         |> ignore
 
         ()

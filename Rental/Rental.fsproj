@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>BikeRental.Rental</AssemblyName>
+        <RootNamespace>BikeRental.Rental</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Fundamentals.fs" />
+        <Compile Include="Incoming.fs" />
+        <Compile Include="Facade.fs" />
+        <Compile Include="WebApi.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+        <PackageReference Include="NodaTime" Version="3.0.0" />
+        <PackageReference Include="FSharpx.Extras" Version="2.5.0" />
+        <PackageReference Include="FsToolkit.ErrorHandling" Version="2.0.0" />
+        <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="Frontend\bikes.page.ts" />
+      <TypeScriptCompile Include="Frontend\rental.module.ts" />
+    </ItemGroup>
+
+</Project>

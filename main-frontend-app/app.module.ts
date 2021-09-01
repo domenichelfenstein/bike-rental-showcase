@@ -15,11 +15,16 @@ const routes: Routes = [
         canActivate: [MustBeLoggedInGuard]
     },
     {
+        path: "rental",
+        loadChildren: () => import("../Rental/Frontend/rental.module").then(m => m.RentalModule),
+        canActivate: [MustBeLoggedInGuard]
+    },
+    {
         path: "registration",
         loadChildren: () => import("../Registration/Frontend/registration.module").then(m => m.RegistrationModule),
         canActivate: [MustNotBeLoggedInGuard]
     },
-    { path: '**', redirectTo: "accounting/accountingPage" }
+    { path: '**', redirectTo: "rental/bikes" }
 ];
 
 @NgModule({
