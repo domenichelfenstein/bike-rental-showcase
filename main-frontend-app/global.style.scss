@@ -10,3 +10,14 @@ body {
 .card {
     box-shadow: 0 0.25rem 1rem rgb(48 55 66 / 15%);
 }
+
+a.card {
+    color: #3b4351;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0 0.25rem 1rem rgb(48 55 66 / 25%);
+        color: #3b4351;
+        text-decoration: none;
+    }
+}

@@ -11,5 +11,5 @@ type RegistrationApiController(facade: RentalFacade) =
     inherit ControllerBase()
 
     [<HttpGet>]
-    [<Route("test")>]
-    member self.test() = asyncResult { return [ 1; 2; 3 ] }
+    [<Route("bikes")>]
+    member self.GetAllBikes() = facade.GetAllBikes()

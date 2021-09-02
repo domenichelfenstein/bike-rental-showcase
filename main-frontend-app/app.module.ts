@@ -36,7 +36,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModulesStrategy }),
         BrowserModule
     ],
-    providers: [ AuthService, MustBeLoggedInGuard, MustNotBeLoggedInGuard, ChangeService ],
+    providers: [AuthService, MustBeLoggedInGuard, MustNotBeLoggedInGuard, ChangeService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,19 +1,17 @@
 ﻿namespace BikeRental.Rental
 
 type RentalStorages =
-    { Placeholder : unit }
-
-type SqlContext = { ConnectionString: string }
+    { Bikes: BikeStorage }
 
 type RentalStorageContext =
     | InMemory
-    | Sql of SqlContext
+    | Json of BikeJsonStorage.JsonContext
 
 module RentalStorageCreator =
     let create (ctx: RentalStorageContext) =
         match ctx with
-        | InMemory ->
-            { Placeholder = () }
+        | Json json ->
+            { Bikes = BikeJsonStorage.create json }
         | _ -> failwith "not implemented"
 
 type RentalServices = {

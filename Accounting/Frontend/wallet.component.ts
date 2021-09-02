@@ -4,6 +4,7 @@ import { ResultOk } from "../../Starter/CommonTypes";
 import { merge, Observable, of, ReplaySubject } from "rxjs";
 import { ChangeService } from "../../main-frontend-app/change.service";
 import { filter, map, mergeMap, shareReplay } from "rxjs/operators";
+import { PricePipe } from "../../main-frontend-app/price.pipe";
 
 @Component({
     selector: "wallet",
@@ -30,7 +31,7 @@ export class WalletComponent implements OnChanges {
         const balance = loadTrigger.pipe(
             mergeMap(userId => this.authService.getResult<Wallet>(`/accounting/wallet/${userId}`)),
             filter(result => result instanceof ResultOk),
-            map(result => result instanceof ResultOk ? `${result.value.balance.toFixed(2)} $` : "???"),
+            map(result => result instanceof ResultOk ? PricePipe.transform(result.value.balance) : PricePipe.transform(undefined)),
             shareReplay()
         );
 
