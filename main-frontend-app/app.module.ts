@@ -7,6 +7,7 @@ import { PreloadAllModulesStrategy } from "./preloadStrategy";
 import { AuthService } from "./auth.service";
 import { MustBeLoggedInGuard } from "./mustBeLoggedIn.guard";
 import { MustNotBeLoggedInGuard } from "./mustNotBeLoggedIn.guard";
+import { ChangeService } from "./change.service";
 
 const routes: Routes = [
     {
@@ -35,7 +36,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModulesStrategy }),
         BrowserModule
     ],
-    providers: [ AuthService, MustBeLoggedInGuard, MustNotBeLoggedInGuard ],
+    providers: [ AuthService, MustBeLoggedInGuard, MustNotBeLoggedInGuard, ChangeService ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -9,26 +9,33 @@ open FSharp.Control.Tasks
 open Microsoft.AspNetCore.Http
 
 module WebSocket =
-    let sendWebSocketMessageOnEvent (webSocket: WebSocket) eventStream =
+    let sendWebSocketMessageOnEvent (webSocket: WebSocket) (eventStream: IEvent<Guid * string>) filterGuid =
         task {
             let rec waitForEvent () =
                 task {
                     printfn "waiting"
-                    let! _ = Async.AwaitEvent eventStream
+
+                    let! id, msg = Async.AwaitEvent eventStream
                     printfn "change happened"
-                    let serverMsg = Encoding.UTF8.GetBytes "change"
 
-                    do!
-                        webSocket.SendAsync(
-                            ArraySegment<byte>(serverMsg, 0, serverMsg.Length),
-                            WebSocketMessageType.Text,
-                            true,
-                            CancellationToken.None
-                        )
+                    if id = filterGuid then
+                        printfn "correct id"
+                        let serverMsg = Encoding.UTF8.GetBytes msg
 
-                    printfn "msg sent"
+                        do!
+                            webSocket.SendAsync(
+                                ArraySegment<byte>(serverMsg, 0, serverMsg.Length),
+                                WebSocketMessageType.Text,
+                                true,
+                                CancellationToken.None
+                            )
 
-                    do! waitForEvent ()
+                        printfn "msg sent"
+
+                        do! waitForEvent ()
+                    else
+                        printfn "wrong id"
+                        do! waitForEvent ()
                 }
 
             do! waitForEvent ()

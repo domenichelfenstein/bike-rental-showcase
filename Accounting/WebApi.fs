@@ -13,21 +13,17 @@ type AccountingController(facade: AccountingFacade) =
 
     [<HttpGet>]
     [<Route("wallet/{userId}")>]
-    member self.Get([<FromRoute>] userId: Guid) = facade.GetWallet(UserId userId)
+    member self.GetWallet([<FromRoute>] userId: Guid) = facade.GetWallet(UserId userId)
+
+    [<HttpPost>]
+    [<Route("wallet/deposit")>]
+    member self.Deposit([<FromBody>] data) = facade.Deposit data
 
     [<HttpGet>]
     [<AllowAnonymous>]
-    [<Route("ws")>]
-    member self.GetWebSocket() =
+    [<Route("ws/user/{userId}")>]
+    member self.GetWebSocket([<FromRoute>] userId: Guid) =
         task {
             use! webSocket = self.HttpContext.WebSockets.AcceptWebSocketAsync()
-            do! WebSocket.sendWebSocketMessageOnEvent webSocket facade.UIChanged
+            do! userId |> WebSocket.sendWebSocketMessageOnEvent webSocket facade.UIChanged
         }
-
-    [<HttpGet>]
-    [<AllowAnonymous>]
-    [<Route("test")>]
-    member self.Test() = task {
-        facade.TriggerUIChange "test"
-        return [ 1; 2 ]
-    }

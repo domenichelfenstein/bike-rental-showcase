@@ -22,6 +22,7 @@
         <Compile Include="Wallet\Storage.fs" />
         <Compile Include="Wallet\Wallet.fs" />
         <Compile Include="Features\CreateWallet.fs" />
+        <Compile Include="Features\Deposit.fs" />
         <Compile Include="Features\QueryWallet.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />

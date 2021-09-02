@@ -21,7 +21,7 @@ module Adapters =
 module FacadesCreator =
 
     let create (_configuration: IConfiguration) =
-        let uiChangedEvent = Event<string>()
+        let uiChangedEvent = Event<Guid * string>()
 
         let accountingServices =
             { AccountingServices.GetNodaInstant = Services.getNodaInstant }

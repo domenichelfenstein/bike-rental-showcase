@@ -1,7 +1,9 @@
 ﻿import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AuthService } from "../../main-frontend-app/auth.service";
 import { ResultOk } from "../../Starter/CommonTypes";
-import { BehaviorSubject } from "rxjs";
+import { merge, Observable, of, ReplaySubject } from "rxjs";
+import { ChangeService } from "../../main-frontend-app/change.service";
+import { filter, map, mergeMap, shareReplay } from "rxjs/operators";
 
 @Component({
     selector: "wallet",
@@ -12,20 +14,33 @@ import { BehaviorSubject } from "rxjs";
 export class WalletComponent implements OnChanges {
     @Input() userId: string | undefined;
 
-    public balanceResult = new BehaviorSubject("???");
+    private userIdChanged = new ReplaySubject<string>();
+    public balanceResult: Observable<string>;
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private changeService: ChangeService
     ) {
+        const loadTrigger = merge(
+            this.userIdChanged,
+            this.changeService.onChange.pipe(
+                filter(x => x.userId == this.userId && x.message == "accounting"),
+                map(x => x.userId)));
+
+        const balance = loadTrigger.pipe(
+            mergeMap(userId => this.authService.getResult<Wallet>(`/accounting/wallet/${userId}`)),
+            filter(result => result instanceof ResultOk),
+            map(result => result instanceof ResultOk ? `${result.value.balance.toFixed(2)} $` : "???"),
+            shareReplay()
+        );
+
+        this.balanceResult = merge(of("???"), balance);
     }
 
     async ngOnChanges(changes: SimpleChanges) {
-        const userIdChanges = changes["userId"];
-        if (userIdChanges.currentValue != undefined) {
-            const walletResult = await this.authService.getResult<Wallet>(`/accounting/wallet/${this.userId}`);
-            if (walletResult instanceof ResultOk) {
-                this.balanceResult.next(`${walletResult.value.balance.toFixed(2)} $`);
-            }
+        if (this.userId != undefined) {
+            this.userIdChanged.next(this.userId);
+            this.changeService.listeningForUserChanges(this.userId);
         }
     }
 }
