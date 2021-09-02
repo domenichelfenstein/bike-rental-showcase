@@ -21,10 +21,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Include="TaskBuilder.fs" />
         <Compile Include="InMemoryFakes.fs" />
         <Compile Include="Services.fs" />
         <Compile Include="FacadesCreator.fs" />
         <Compile Include="Authentication.fs" />
+        <Compile Include="WebSocket.fs" />
         <Compile Include="Startup.fs" />
     </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace BikeRental.Accounting
+﻿namespace BikeRental.Startup
 
 open System
 open System.Net.WebSockets
@@ -40,3 +40,13 @@ module WebSocket =
 
             do! waitForEvent ()
         }
+
+    let wsMiddleware (eventStream: IEvent<Guid * string>) (context: HttpContext) (next: Func<Task>) =
+        task {
+            if context.WebSockets.IsWebSocketRequest && context.Request.Path.Value.StartsWith("/ws/user") then
+                let userId = Guid.Parse (context.Request.Path.Value.Replace("/ws/user/", String.Empty))
+                use! webSocket = context.WebSockets.AcceptWebSocketAsync()
+                do! userId |> sendWebSocketMessageOnEvent webSocket eventStream
+            else
+                do! next.Invoke()
+        } :> Task

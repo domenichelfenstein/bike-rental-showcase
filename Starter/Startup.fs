@@ -1,11 +1,13 @@
 namespace BikeRental.Starter
 
+open System
 open System.IO
 open System.Text.Json.Serialization
 open BikeRental.Registration
 open BikeRental.Accounting
 open BikeRental.Rental
 open BikeRental.Starter.FakeAuthentication
+open BikeRental.Startup
 open Microsoft.AspNetCore.Authentication
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
@@ -44,12 +46,13 @@ type Startup(configuration: IConfiguration) =
         parts.Add(registrationAssemblyPart)
         parts.Add(accountingAssemblyPart)
 
-        let facades = FacadesCreator.create self.Configuration
+        let uiChangedEvent, facades = FacadesCreator.create self.Configuration
 
         services
             .AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
             .AddSingleton<AccountingFacade>(fun _ -> facades.Accounting)
             .AddSingleton<RentalFacade>(fun _ -> facades.Rental)
+            .AddSingleton<Event<Guid * string>>(fun _ -> uiChangedEvent)
         |> ignore
 
         ()
@@ -69,12 +72,14 @@ type Startup(configuration: IConfiguration) =
         staticFileOptions.RequestPath <- pathString
         staticFileOptions.FileProvider <- fileProvider
 
+        let eventStream = app.ApplicationServices.GetService<Event<Guid * string>>()
         app
             .UseRouting()
             .UseAuthentication()
             .UseAuthorization()
             .UseWebSockets()
             .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
+            .Use(WebSocket.wsMiddleware eventStream.Publish)
         |> ignore
 
 #if DEBUG

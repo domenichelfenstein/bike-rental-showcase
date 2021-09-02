@@ -26,8 +26,9 @@ module FacadesCreator =
         let accountingServices =
             { AccountingServices.GetNodaInstant = Services.getNodaInstant }
 
+        let accountingChanged msg (BikeRental.Accounting.UserId userId) = uiChangedEvent.Trigger(userId, msg)
         let accountingFacade =
-            AccountingFacade(accountingServices, (AccountingStorageCreator.create AccountingStorageContext.InMemory), uiChangedEvent)
+            AccountingFacade(accountingServices, (AccountingStorageCreator.create AccountingStorageContext.InMemory), accountingChanged)
 
         let registrationServices =
             { RegistrationServices.GenerateVerificationCode = Fakes.generateVerificationCode
@@ -48,6 +49,4 @@ module FacadesCreator =
         let rentalFacade =
             RentalFacade(rentalServices, (RentalStorageCreator.create RentalStorageContext.InMemory))
 
-        { Registration = registrationFacade
-          Accounting = accountingFacade
-          Rental = rentalFacade }
+        uiChangedEvent, { Registration = registrationFacade ; Accounting = accountingFacade ; Rental = rentalFacade }

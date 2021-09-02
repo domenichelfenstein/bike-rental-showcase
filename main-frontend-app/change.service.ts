@@ -11,7 +11,7 @@ export class ChangeService implements OnDestroy {
             console.log(`listeningForUserChanges: already listening for userId '${userId}'`)
             return;
         }
-        const webSocket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}/accounting/ws/user/${userId}`);
+        const webSocket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}/ws/user/${userId}`);
         webSocket.addEventListener("message", (event: MessageEvent<string>) => {
             console.log("event", [userId, event.data]);
             this.onChange.next(new BackendChange(userId, event.data));
