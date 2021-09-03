@@ -48,6 +48,6 @@ module FacadesCreator =
 
         let rentalJsonContext = {  BikeJsonStorage.JsonContext.FilePath = "./bikes.json" }
         let rentalFacade =
-            RentalFacade(rentalServices, (RentalStorageCreator.create (RentalStorageContext.Json rentalJsonContext)))
+            RentalFacade(rentalServices, (RentalStorageCreator.create (RentalStorageContext.Mixed rentalJsonContext)))
 
         uiChangedEvent, { Registration = registrationFacade ; Accounting = accountingFacade ; Rental = rentalFacade }

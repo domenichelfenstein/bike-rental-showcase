@@ -1,19 +1,20 @@
 ﻿namespace BikeRental.Rental
 
 type RentalStorages =
-    { Bikes: BikeStorage }
+    { Bikes: BikeStorage
+      BookingEvents: BookingEventStorage }
 
 type RentalStorageContext =
     | InMemory
-    | Json of BikeJsonStorage.JsonContext
+    | Mixed of BikeJsonStorage.JsonContext
 
 module RentalStorageCreator =
     let create (ctx: RentalStorageContext) =
         match ctx with
-        | Json json ->
-            { Bikes = BikeJsonStorage.create json }
+        | Mixed json ->
+            { Bikes = BikeJsonStorage.create json
+              BookingEvents = BookingEventInMemoryStorage.create () }
         | _ -> failwith "not implemented"
 
-type RentalServices = {
-    GetNodaInstant : unit -> NodaTime.Instant
-}
+type RentalServices =
+    { GetNodaInstant: unit -> NodaTime.Instant }

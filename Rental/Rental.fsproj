@@ -14,6 +14,13 @@
         <Compile Include="Fundamentals.fs" />
         <Compile Include="Bike\Bike.fs" />
         <Compile Include="Bike\Storage.fs" />
+        <Compile Include="Errors.fs" />
+        <Compile Include="Booking\Events.fs" />
+        <Compile Include="Booking\Storages.fs" />
+        <Compile Include="Booking\Booking.fs" />
+        <Compile Include="Features\QueryBikes.fs" />
+        <Compile Include="Features\RentBike.fs" />
+        <Compile Include="Features\ReleaseBike.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
         <Compile Include="WebApi.fs" />
