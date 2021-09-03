@@ -52,7 +52,6 @@ module Booking =
             bookingsUntilNow
             |> List.filter (fun b -> b.End.IsSome)
             |> List.isEmpty
-            |> not
 
         match isAvailable with
         | true -> Bookable

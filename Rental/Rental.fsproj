@@ -38,6 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="Frontend\available.pipe.ts" />
       <TypeScriptCompile Include="Frontend\bikes.page.ts" />
       <TypeScriptCompile Include="Frontend\rental.module.ts" />
     </ItemGroup>
