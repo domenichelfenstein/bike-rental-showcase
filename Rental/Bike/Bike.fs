@@ -3,7 +3,6 @@
 open System
 
 type BikeId = BikeId of Guid
-type Price = Price of decimal
 
 type Bike =
     { BikeId: BikeId

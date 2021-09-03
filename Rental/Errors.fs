@@ -5,3 +5,5 @@ type RentalError =
     | BookingNotFound
     | BikeAlreadyReleased
     | BikeAlreadyBooked
+    | UserWalletNotFound
+    | UserBalanceNotSufficient

@@ -11,6 +11,8 @@ module RentBike =
     let execute
         (persistBookingEvent: BookingEvent -> Async<unit>)
         (queryBookingEventsOfBike: BikeId -> Async<BookingEvent list>)
+        (queryBike: BikeId -> Async<Bike option>)
+        (getBalance: UserId -> Async<Balance option>)
         (getInstant: unit -> Instant)
         bookingId
         (data: Data)
@@ -25,6 +27,18 @@ module RentBike =
                 Booking.getStatusOfBike instant bookings
                 |> (fun x -> x = Bookable)
                 |> Result.requireTrue RentalError.BikeAlreadyBooked
+
+            let! bike =
+                queryBike data.BikeId
+                |> Async.map (Result.requireSome RentalError.BikeNotFound)
+
+            let! userBalance =
+                getBalance data.UserId
+                |> Async.map (Result.requireSome RentalError.UserWalletNotFound)
+
+            do!
+                userBalance - bike.Price > Balance 0m
+                |> Result.requireTrue RentalError.UserBalanceNotSufficient
 
             do!
                 persistBookingEvent

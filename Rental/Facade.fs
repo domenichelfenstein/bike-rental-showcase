@@ -9,7 +9,12 @@ type RentalFacade(services: RentalServices, storages: RentalStorages) =
         QueryBikes.query storages.Bikes.GetAll storages.BookingEvents.GetAllEvents getInstant
 
     member self.RentBike =
-        RentBike.execute storages.BookingEvents.PersistEvent storages.BookingEvents.GetEventsOfBike getInstant
+        RentBike.execute
+            storages.BookingEvents.PersistEvent
+            storages.BookingEvents.GetEventsOfBike
+            storages.Bikes.GetBike
+            services.GetUserBalance
+            getInstant
 
     member self.ReleaseBike =
         ReleaseBike.execute storages.BookingEvents.PersistEvent storages.BookingEvents.GetEventsOfBooking getInstant

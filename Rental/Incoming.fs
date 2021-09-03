@@ -17,4 +17,7 @@ module RentalStorageCreator =
         | _ -> failwith "not implemented"
 
 type RentalServices =
-    { GetNodaInstant: unit -> NodaTime.Instant }
+    {
+        GetNodaInstant: unit -> NodaTime.Instant
+        GetUserBalance: UserId -> Async<Balance option>
+    }
