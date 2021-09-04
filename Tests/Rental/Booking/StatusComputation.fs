@@ -37,7 +37,7 @@ let ``Unreleased booking before from same user`` () =
 
     let result = Booking.getStatusOfBike queryInstant booking.UserId [ booking ]
 
-    result =! Releasable
+    result =! Releasable booking.BookingId
 
 [<Fact>]
 let ``Unreleased booking after`` () =

@@ -19,4 +19,8 @@ type RentalFacade(services: RentalServices, storages: RentalStorages, bikesUiCha
             getInstant
 
     member self.ReleaseBike =
-        ReleaseBike.execute storages.BookingEvents.PersistEvent storages.BookingEvents.GetEventsOfBooking getInstant
+        ReleaseBike.execute
+            storages.BookingEvents.PersistEvent
+            storages.BookingEvents.GetEventsOfBooking
+            bikesUiChangedFromRental
+            getInstant

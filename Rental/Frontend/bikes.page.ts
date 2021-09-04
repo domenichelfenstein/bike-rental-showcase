@@ -70,17 +70,16 @@ export class BikesPageComponent {
     }
 
     release = async (bike: Bike) => {
-        // const userInfo = this.authService.getUserInfo();
-        // if (userInfo instanceof ResultOk) {
-        //     const result = await this.authService.post("/rental/release", {
-        //         "BikeId": bike.bikeId,
-        //         "UserId": userInfo.value.UserId
-        //     });
-        //
-        //     if (result instanceof ResultError) {
-        //         this.displayError.next(true);
-        //     }
-        // }
+        const userInfo = this.authService.getUserInfo();
+        if (userInfo instanceof ResultOk && bike.status.Fields != undefined) {
+            const result = await this.authService.post("/rental/release", {
+                "BookingId": bike.status.Fields[0]
+            });
+
+            if (result instanceof ResultError) {
+                this.displayError.next(true);
+            }
+        }
     }
 }
 
@@ -90,6 +89,6 @@ export type Bike = {
     name: string
     manufacturer: string
     price: number
-    status: { "Case": AvailabilityStatus }
+    status: { "Case": AvailabilityStatus, "Fields"?: [string] }
     base64Image: string
 }
