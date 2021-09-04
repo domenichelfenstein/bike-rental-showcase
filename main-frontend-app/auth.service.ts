@@ -9,6 +9,12 @@ export class AuthService {
 
     public get = <TOut>(url: string) => fetchGet<TOut>(url, this.getHeaders());
     public getResult = <TOut>(url: string) => fetchGetResult<TOut>(url, this.getHeaders());
+    public getOkResult = <TOut>(url: string) => this.getResult(url).then(result => {
+        if (result instanceof ResultError) {
+            throw result.errorCode;
+        }
+        return <TOut>result.value;
+    })
     public post = <TOut = null>(url: string, body: any) => fetchPost<TOut>(url, body, this.getHeaders());
 
     public login = async (username: string, password: string) => {

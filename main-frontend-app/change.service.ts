@@ -1,32 +1,42 @@
 ﻿import { Injectable, OnDestroy } from "@angular/core";
 import { merge, of, ReplaySubject } from "rxjs";
-import { filter } from "rxjs/operators";
+import { filter, map, shareReplay } from "rxjs/operators";
 
 @Injectable()
 export class ChangeService implements OnDestroy {
     private webSockets: [string, WebSocket][] = [];
-    public onChange = new ReplaySubject<BackendChange>();
+    private onChange = new ReplaySubject<BackendChange<any>>();
 
-    public listeningForChanges = (id: string) => {
+    public listeningForChanges = <T>(id: string | undefined) => {
+        if(id == undefined) {
+            return of(undefined);
+        }
+
         if(this.webSockets.find(([uid, _]) => uid == id)) {
             console.log(`listeningForUserChanges: already listening for id '${id}'`)
-            return this.onChange.pipe(filter(change => change.id == id));
+            return this.getChanges<T>(id);
         }
         const webSocket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}/ws/id/${id}`);
         webSocket.addEventListener("message", (event: MessageEvent<string>) => {
             console.log("event", [id, event.data]);
-            this.onChange.next(new BackendChange(id, event.data));
+            const json = JSON.parse(event.data);
+            this.onChange.next(new BackendChange(id, json));
         });
 
         this.webSockets.push([id, webSocket]);
 
-        return this.onChange.pipe(filter(change => change.id == id));
+        return this.getChanges<T>(id);
     }
 
-    public listeningForChangesWithInstantLoad = (id: string) => merge(
-        of(new BackendChange(id, "instant")),
-        this.listeningForChanges(id)
+    public listeningForChangesWithInstantLoad = <T>(id: string | undefined) => merge(
+        of(new BackendChange<T>(<any>id, <any>undefined)),
+        this.listeningForChanges<T>(id)
     );
+
+    private getChanges = <T>(id: string) => this.onChange.pipe(
+        filter(change => change.id == id),
+        map(change => <T>change.message),
+        shareReplay());
 
     public closeConnections = () => {
         this.webSockets.forEach(([_, webSocket]) => webSocket.close());
@@ -37,10 +47,10 @@ export class ChangeService implements OnDestroy {
     }
 }
 
-export class BackendChange {
+export class BackendChange<T> {
     constructor(
         public id: string,
-        public message: string
+        public message: T
     ) {
     }
 }

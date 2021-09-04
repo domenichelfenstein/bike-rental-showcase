@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component} from '@angular/core';
 import { AuthService } from "../../main-frontend-app/auth.service";
 import { ResultOk } from "../../Starter/CommonTypes";
 
@@ -6,20 +6,23 @@ import { ResultOk } from "../../Starter/CommonTypes";
     selector: "user-wallet",
     template: `
         <a routerLinkActive="active" [routerLink]="['/', 'accounting', 'deposit']">
-            <wallet [userId]="userId"></wallet>
+            <wallet [walletId]="(wallet | async)?.walletId"></wallet>
         </a>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class UserWalletComponent {
-    public userId: string | undefined;
+    public wallet: Promise<Wallet> | undefined;
 
     constructor(
-        private authService: AuthService
+        authService: AuthService
     ) {
         const info = authService.getUserInfo();
-        if(info instanceof ResultOk) {
-            this.userId = info.value.UserId;
+        if (info instanceof ResultOk) {
+            this.wallet = authService.getOkResult<Wallet>(`/accounting/user/${info.value.UserId}/wallet`);
         }
     }
+}
+
+type Wallet = {
+    walletId: string
 }

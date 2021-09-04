@@ -12,7 +12,7 @@ module Withdraw =
         (getEventsByUserId: UserId -> Async<WalletEvent list>)
         (persistWalletEvent: WalletEvent -> Async<unit>)
         (getInstant: unit -> Instant)
-        (triggerUIChange: UserId -> unit)
+        (triggerUIChange: WalletId -> unit)
         (data: Data)
         =
         asyncResult {
@@ -37,5 +37,5 @@ module Withdraw =
                       Data = WalletEventData.Withdrawn data.Amount
                       Instant = getInstant () }
 
-            triggerUIChange data.UserId
+            triggerUIChange wallet.WalletId
         }

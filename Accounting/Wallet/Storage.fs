@@ -2,7 +2,8 @@
 
 type WalletEventStorage =
     abstract PersistEvent : WalletEvent -> Async<unit>
-    abstract QueryByUserId : UserId -> Async<WalletEvent list>
+    abstract GetWalletEventsByUserId : UserId -> Async<WalletEvent list>
+    abstract GetWalletEvents : WalletId -> Async<WalletEvent list>
 
 module WalletEventInMemoryStorage =
     let create () =
@@ -12,5 +13,8 @@ module WalletEventInMemoryStorage =
             member self.PersistEvent event =
                 async { events <- events |> List.append [ event ] }
 
-            member self.QueryByUserId userId =
-                async { return events |> List.filter (fun e -> e.UserId = userId) } }
+            member self.GetWalletEventsByUserId userId =
+                async { return events |> List.filter (fun e -> e.UserId = userId) }
+
+            member self.GetWalletEvents walletId =
+                async { return events |> List.filter (fun e -> e.WalletId = walletId) } }

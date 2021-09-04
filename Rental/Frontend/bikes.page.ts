@@ -1,7 +1,7 @@
 ﻿import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from "../../main-frontend-app/auth.service";
 import { ResultError, ResultOk } from "../../Starter/CommonTypes";
-import { BehaviorSubject, Observable, of } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { ChangeService } from "../../main-frontend-app/change.service";
 import { mergeMap, shareReplay } from "rxjs/operators";
 
@@ -54,9 +54,12 @@ export class BikesPageComponent {
     rent = async (bike: Bike) => {
         const userInfo = this.authService.getUserInfo();
         if (userInfo instanceof ResultOk) {
-            const result = await this.authService.post("/rental/rent", { "BikeId": bike.bikeId, "UserId": userInfo.value.UserId });
+            const result = await this.authService.post("/rental/rent", {
+                "BikeId": bike.bikeId,
+                "UserId": userInfo.value.UserId
+            });
 
-            if(result instanceof ResultError) {
+            if (result instanceof ResultError) {
                 this.displayError.next(true);
             }
         }

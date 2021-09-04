@@ -2,9 +2,9 @@
 
 open BikeRental.Rental.Features
 
-type RentalFacade(services: RentalServices, storages: RentalStorages, bikesUiChanged: string -> unit) =
+type RentalFacade(services: RentalServices, storages: RentalStorages, bikesUiChanged: obj -> unit) =
     let getInstant = services.GetNodaInstant >> Instant
-    let bikesUiChangedFromRental () = bikesUiChanged "rental"
+    let bikesUiChangedFromRental () = bikesUiChanged {| Sender = "rental" |}
 
     member self.GetAllBookableBikes =
         QueryBikes.query storages.Bikes.GetAll storages.BookingEvents.GetAllEvents getInstant

@@ -12,7 +12,7 @@ module Deposit =
         (getEventsByUserId: UserId -> Async<WalletEvent list>)
         (persistWalletEvent: WalletEvent -> Async<unit>)
         (getInstant: unit -> Instant)
-        (triggerUIChange: UserId -> unit)
+        (triggerUIChange: WalletId -> unit)
         (data: Data)
         =
         asyncResult {
@@ -30,5 +30,5 @@ module Deposit =
                       Data = WalletEventData.Deposited data.Amount
                       Instant = getInstant () }
 
-            triggerUIChange data.UserId
+            triggerUIChange wallet.WalletId
         }

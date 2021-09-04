@@ -11,8 +11,12 @@ type AccountingController(facade: AccountingFacade) =
     inherit ControllerBase()
 
     [<HttpGet>]
-    [<Route("wallet/{userId}")>]
-    member self.GetWallet([<FromRoute>] userId: Guid) = facade.GetWallet(UserId userId)
+    [<Route("user/{userId}/wallet")>]
+    member self.GetWalletOfUser([<FromRoute>] userId: Guid) = facade.GetWalletOfUser(UserId userId)
+
+    [<HttpGet>]
+    [<Route("wallet/{walletId}")>]
+    member self.GetWallet([<FromRoute>] walletId: Guid) = facade.GetWallet(WalletId walletId)
 
     [<HttpPost>]
     [<Route("wallet/deposit")>]
