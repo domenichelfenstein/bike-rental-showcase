@@ -41,12 +41,13 @@ module Adapters =
 module FacadesCreator =
 
     let create (_configuration: IConfiguration) =
-        let uiChangedEvent = Event<Guid * string>()
+        let uiChangedEvent = Event<string * string>()
 
         let accountingServices =
             { AccountingServices.GetNodaInstant = Services.getNodaInstant }
 
-        let accountingChanged msg (BikeRental.Accounting.UserId userId) = uiChangedEvent.Trigger(userId, msg)
+        let accountingChanged msg (BikeRental.Accounting.UserId userId) =
+            uiChangedEvent.Trigger(userId.ToString(), msg)
 
         let accountingFacade =
             AccountingFacade(
@@ -75,8 +76,14 @@ module FacadesCreator =
 
         let rentalJsonContext = { BikeJsonStorage.JsonContext.FilePath = "./bikes.json" }
 
+        let bikesUiChanged sender = uiChangedEvent.Trigger("bikes", sender)
+
         let rentalFacade =
-            RentalFacade(rentalServices, (RentalStorageCreator.create (RentalStorageContext.Mixed rentalJsonContext)))
+            RentalFacade(
+                rentalServices,
+                (RentalStorageCreator.create (RentalStorageContext.Mixed rentalJsonContext)),
+                bikesUiChanged
+            )
 
         uiChangedEvent,
         { Registration = registrationFacade

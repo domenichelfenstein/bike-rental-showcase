@@ -49,10 +49,10 @@ type Startup(configuration: IConfiguration) =
         let uiChangedEvent, facades = FacadesCreator.create self.Configuration
 
         services
+            .AddSingleton<Event<string * string>>(fun _ -> uiChangedEvent)
             .AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
             .AddSingleton<AccountingFacade>(fun _ -> facades.Accounting)
             .AddSingleton<RentalFacade>(fun _ -> facades.Rental)
-            .AddSingleton<Event<Guid * string>>(fun _ -> uiChangedEvent)
         |> ignore
 
         ()
@@ -72,7 +72,7 @@ type Startup(configuration: IConfiguration) =
         staticFileOptions.RequestPath <- pathString
         staticFileOptions.FileProvider <- fileProvider
 
-        let eventStream = app.ApplicationServices.GetService<Event<Guid * string>>()
+        let eventStream = app.ApplicationServices.GetService<Event<string * string>>()
         app
             .UseRouting()
             .UseAuthentication()

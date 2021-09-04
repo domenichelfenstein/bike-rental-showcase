@@ -25,8 +25,8 @@ export class WalletComponent implements OnChanges {
         const loadTrigger = merge(
             this.userIdChanged,
             this.changeService.onChange.pipe(
-                filter(x => x.userId == this.userId && x.message == "accounting"),
-                map(x => x.userId)));
+                filter(x => x.id == this.userId && x.message == "accounting"),
+                map(x => x.id)));
 
         const balance = loadTrigger.pipe(
             mergeMap(userId => this.authService.getResult<Wallet>(`/accounting/wallet/${userId}`)),
@@ -41,7 +41,7 @@ export class WalletComponent implements OnChanges {
     async ngOnChanges(changes: SimpleChanges) {
         if (this.userId != undefined) {
             this.userIdChanged.next(this.userId);
-            this.changeService.listeningForUserChanges(this.userId);
+            this.changeService.listeningForChanges(this.userId);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from "../../main-frontend-app/auth.service";
 import { ResultError, ResultOk } from "../../Starter/CommonTypes";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
+import { ChangeService } from "../../main-frontend-app/change.service";
+import { mergeMap, shareReplay } from "rxjs/operators";
 
 @Component({
     template: `
@@ -36,13 +38,17 @@ import { BehaviorSubject } from "rxjs";
 })
 
 export class BikesPageComponent {
-    public bikes: Promise<Bike[]>;
+    public bikes: Observable<Bike[]>;
     public displayError = new BehaviorSubject(false);
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        changeService: ChangeService
     ) {
-        this.bikes = authService.get<Bike[]>("/rental/bikes");
+        this.bikes = changeService.listeningForChangesWithInstantLoad("bikes").pipe(
+            mergeMap(_ => authService.get<Bike[]>("/rental/bikes")),
+            shareReplay()
+        );
     }
 
     rent = async (bike: Bike) => {
