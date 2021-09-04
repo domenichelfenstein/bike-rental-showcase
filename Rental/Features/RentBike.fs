@@ -25,7 +25,7 @@ module RentBike =
             let instant = getInstant ()
 
             do!
-                Booking.getStatusOfBike instant bookings
+                Booking.getStatusOfBike instant data.UserId bookings
                 |> (fun x -> x = Bookable)
                 |> Result.requireTrue RentalError.BikeAlreadyBooked
 

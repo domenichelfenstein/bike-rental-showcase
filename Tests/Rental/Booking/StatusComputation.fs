@@ -8,7 +8,8 @@ open Swensen.Unquote
 
 [<Fact>]
 let ``Empty list`` () =
-    let result = Booking.getStatusOfBike (Example.create ()) []
+    let result =
+        Booking.getStatusOfBike (Example.create ()) (Example.create ()) []
 
     result =! Bookable
 
@@ -21,9 +22,22 @@ let ``Unreleased booking before`` () =
               Start = "2021-09-04 08:00" |> NodaInstant.parse |> Instant
               End = None }
 
-    let result = Booking.getStatusOfBike queryInstant [ booking ]
+    let result = Booking.getStatusOfBike queryInstant (Example.create ()) [ booking ]
 
     result =! NotAvailable
+
+[<Fact>]
+let ``Unreleased booking before from same user`` () =
+    let queryInstant = "2021-09-04 09:00" |> NodaInstant.parse |> Instant
+
+    let booking =
+        { Example.create<Booking> () with
+              Start = "2021-09-04 08:00" |> NodaInstant.parse |> Instant
+              End = None }
+
+    let result = Booking.getStatusOfBike queryInstant booking.UserId [ booking ]
+
+    result =! Releasable
 
 [<Fact>]
 let ``Unreleased booking after`` () =
@@ -34,7 +48,7 @@ let ``Unreleased booking after`` () =
               Start = "2021-09-04 10:00" |> NodaInstant.parse |> Instant
               End = None }
 
-    let result = Booking.getStatusOfBike queryInstant [ booking ]
+    let result = Booking.getStatusOfBike queryInstant (Example.create ()) [ booking ]
 
     result =! Bookable
 
@@ -51,7 +65,7 @@ let ``Released booking before`` () =
                   |> Instant
                   |> Some }
 
-    let result = Booking.getStatusOfBike queryInstant [ booking ]
+    let result = Booking.getStatusOfBike queryInstant (Example.create ()) [ booking ]
 
     result =! Bookable
 
@@ -68,7 +82,7 @@ let ``Released booking in future`` () =
                   |> Instant
                   |> Some }
 
-    let result = Booking.getStatusOfBike queryInstant [ booking ]
+    let result = Booking.getStatusOfBike queryInstant (Example.create ()) [ booking ]
 
     result =! NotAvailable
 
@@ -90,6 +104,6 @@ let ``Released booking with unreleased booking. Both before`` () =
               Start = "2021-09-04 08:00" |> NodaInstant.parse |> Instant
               End = None }
 
-    let result = Booking.getStatusOfBike queryInstant [ booking1; booking2 ]
+    let result = Booking.getStatusOfBike queryInstant (Example.create ()) [ booking1; booking2 ]
 
     result =! NotAvailable

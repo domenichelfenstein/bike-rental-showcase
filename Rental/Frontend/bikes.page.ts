@@ -25,7 +25,8 @@ import { mergeMap, shareReplay } from "rxjs/operators";
                         <p>{{ bike.price | price }}</p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn" [disabled]="!(bike | available)" (click)="rent(bike)">Rent</button>
+                        <button class="btn btn-primary" [disabled]="!(bike | available)" (click)="rent(bike)">Rent</button>
+                        <button class="btn" *ngIf="bike.status.Case == 'Releasable'" (click)="release(bike)">Release</button>
                     </div>
                 </div>
             </div>
@@ -38,17 +39,20 @@ import { mergeMap, shareReplay } from "rxjs/operators";
 })
 
 export class BikesPageComponent {
-    public bikes: Observable<Bike[]>;
+    public bikes: Observable<Bike[]> | undefined;
     public displayError = new BehaviorSubject(false);
 
     constructor(
         private authService: AuthService,
         changeService: ChangeService
     ) {
-        this.bikes = changeService.listeningForChangesWithInstantLoad("bikes").pipe(
-            mergeMap(_ => authService.get<Bike[]>("/rental/bikes")),
-            shareReplay()
-        );
+        const info = authService.getUserInfo();
+        if (info instanceof ResultOk) {
+            this.bikes = changeService.listeningForChangesWithInstantLoad("bikes").pipe(
+                mergeMap(_ => authService.get<Bike[]>(`/rental/bikes/${info.value.UserId}`)),
+                shareReplay()
+            );
+        }
     }
 
     rent = async (bike: Bike) => {
@@ -64,9 +68,23 @@ export class BikesPageComponent {
             }
         }
     }
+
+    release = async (bike: Bike) => {
+        // const userInfo = this.authService.getUserInfo();
+        // if (userInfo instanceof ResultOk) {
+        //     const result = await this.authService.post("/rental/release", {
+        //         "BikeId": bike.bikeId,
+        //         "UserId": userInfo.value.UserId
+        //     });
+        //
+        //     if (result instanceof ResultError) {
+        //         this.displayError.next(true);
+        //     }
+        // }
+    }
 }
 
-export type AvailabilityStatus = "Bookable" | "NotAvailable"
+export type AvailabilityStatus = "Bookable" | "NotAvailable" | "Releasable"
 export type Bike = {
     bikeId: string
     name: string

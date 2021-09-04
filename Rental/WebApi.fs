@@ -12,8 +12,8 @@ type RegistrationApiController(facade: RentalFacade) =
     inherit ControllerBase()
 
     [<HttpGet>]
-    [<Route("bikes")>]
-    member self.GetAllBikes() = facade.GetAllBookableBikes
+    [<Route("bikes/{userId}")>]
+    member self.GetAllBikes([<FromRoute>] userId) = facade.GetAllBookableBikes (UserId userId)
 
     [<HttpPost>]
     [<Route("rent")>]

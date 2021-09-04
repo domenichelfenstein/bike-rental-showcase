@@ -12,6 +12,7 @@ type Booking =
 type AvailabilityStatus =
     | Bookable
     | NotAvailable
+    | Releasable
 
 [<RequireQualifiedAccess>]
 module Booking =
@@ -44,23 +45,24 @@ module Booking =
         |> List.map (fun (_, g) -> g |> projectSingle)
         |> List.choose id
 
-    let getStatusOfBike (Instant instant) (bookingsOfBike: Booking list) =
+    let getStatusOfBike (Instant instant) userId (bookingsOfBike: Booking list) =
         let ticks = instant.ToUnixTimeTicks()
 
-        let bookingsUntilNow =
+        let unreleasedBookings =
             bookingsOfBike
             |> List.filter (fun { Start = (Instant start) } -> start.ToUnixTimeTicks() <= ticks)
-
-        let hasUnreleasedBookings =
-            bookingsUntilNow
             |> List.filter
                 (fun b ->
                     match b.End with
                     | None -> true
                     | Some (Instant x) -> x.ToUnixTimeTicks() >= ticks)
-            |> List.isEmpty
-            |> not
+
+        let hasUnreleasedBookings = unreleasedBookings |> List.isEmpty |> not
 
         match hasUnreleasedBookings with
-        | true -> NotAvailable
+        | true ->
+            let lastBooking = unreleasedBookings |> List.last
+            match lastBooking.UserId = userId with
+            | true -> Releasable
+            | false -> NotAvailable
         | false -> Bookable
