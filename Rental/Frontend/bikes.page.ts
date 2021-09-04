@@ -13,7 +13,7 @@ import { BehaviorSubject } from "rxjs";
         </div>
         <div class="columns">
             <div class="column col-3 col-xl-6 col-sm-12" *ngFor="let bike of bikes | async">
-                <a class="card">
+                <div class="card">
                     <div class="card-header">
                         <h5>{{ bike.name }}</h5>
                         <div class="text-gray">{{ bike.manufacturer }}</div>
@@ -25,7 +25,7 @@ import { BehaviorSubject } from "rxjs";
                     <div class="card-footer">
                         <button class="btn" [disabled]="!(bike | available)" (click)="rent(bike)">Rent</button>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
     `,

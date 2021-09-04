@@ -12,7 +12,7 @@ module RentBike =
         (persistBookingEvent: BookingEvent -> Async<unit>)
         (queryBookingEventsOfBike: BikeId -> Async<BookingEvent list>)
         (queryBike: BikeId -> Async<Bike option>)
-        (getBalance: UserId -> Async<Balance option>)
+        (withdrawAmount: Amount -> UserId -> Async<bool>)
         (getInstant: unit -> Instant)
         bookingId
         (data: Data)
@@ -32,13 +32,10 @@ module RentBike =
                 queryBike data.BikeId
                 |> Async.map (Result.requireSome RentalError.BikeNotFound)
 
-            let! userBalance =
-                getBalance data.UserId
-                |> Async.map (Result.requireSome RentalError.UserWalletNotFound)
-
+            let amount = bike.Price |> (fun (Price p) -> Amount p)
             do!
-                userBalance - bike.Price > Balance 0m
-                |> Result.requireTrue RentalError.UserBalanceNotSufficient
+                withdrawAmount amount data.UserId
+                |> Async.map (Result.requireTrue RentalError.UserBalanceNotSufficient)
 
             do!
                 persistBookingEvent
@@ -47,4 +44,5 @@ module RentBike =
                       BikeId = data.BikeId
                       Data = Booked data.UserId
                       Instant = instant }
+
         }

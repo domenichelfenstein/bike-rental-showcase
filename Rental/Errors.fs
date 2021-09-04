@@ -7,3 +7,4 @@ type RentalError =
     | BikeAlreadyBooked
     | UserWalletNotFound
     | UserBalanceNotSufficient
+    | CouldNotWithdrawMoney

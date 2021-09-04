@@ -11,4 +11,7 @@ type AccountingFacade(services: AccountingServices, storages: AccountingStorages
     member self.Deposit =
         Deposit.execute storages.WalletEvents.QueryByUserId storages.WalletEvents.PersistEvent getInstant (uiChanged "accounting")
 
+    member self.Withdraw =
+        Withdraw.execute storages.WalletEvents.QueryByUserId storages.WalletEvents.PersistEvent getInstant (uiChanged "accounting")
+
     member self.GetWallet = QueryWallet.query storages.WalletEvents.QueryByUserId

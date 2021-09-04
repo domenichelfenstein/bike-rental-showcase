@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Rental
 
+open FSharpx.Collections
+
 type Booking =
     { BookingId: BookingId
       BikeId: BikeId
@@ -11,6 +13,7 @@ type AvailabilityStatus =
     | Bookable
     | NotAvailable
 
+[<RequireQualifiedAccess>]
 module Booking =
     let projectSingle (events: BookingEvent list) =
         events
@@ -48,11 +51,16 @@ module Booking =
             bookingsOfBike
             |> List.filter (fun { Start = (Instant start) } -> start.ToUnixTimeTicks() <= ticks)
 
-        let isAvailable =
+        let hasUnreleasedBookings =
             bookingsUntilNow
-            |> List.filter (fun b -> b.End.IsSome)
+            |> List.filter
+                (fun b ->
+                    match b.End with
+                    | None -> true
+                    | Some (Instant x) -> x.ToUnixTimeTicks() >= ticks)
             |> List.isEmpty
+            |> not
 
-        match isAvailable with
-        | true -> Bookable
-        | false -> NotAvailable
+        match hasUnreleasedBookings with
+        | true -> NotAvailable
+        | false -> Bookable
