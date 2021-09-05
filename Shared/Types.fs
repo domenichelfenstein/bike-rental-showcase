@@ -5,8 +5,9 @@ open System
 [<CustomEquality; CustomComparison>]
 type Instant =
     | Instant of NodaTime.Instant
-    member a.innerCompareTo (b: obj) =
+    member a.innerCompareTo(b: obj) =
         let nodaA = a |> (fun (Instant x) -> x)
+
         let instantB =
             match b with
             | :? Instant as instant -> instant
@@ -22,18 +23,18 @@ type Instant =
 
     interface System.IComparable with
         override a.CompareTo(b) = a.innerCompareTo b
+
     override a.Equals(b) = a.innerCompareTo b = 0
+
     override x.GetHashCode() =
         let nodaX = x |> (fun (Instant x) -> x)
         nodaX.GetHashCode()
 
 type Amount = Amount of decimal
-type Price = Price of decimal
 
 type Balance =
     | Balance of decimal
-    static member (-) (Balance balance, Price price) = Balance (balance - price)
-    static member (-) (Balance balance, Amount amount) = Balance (balance - amount)
-    static member (+) (Balance balance, Amount amount) = Balance (balance + amount)
+    static member (-)(Balance balance, Amount amount) = Balance(balance - amount)
+    static member (+)(Balance balance, Amount amount) = Balance(balance + amount)
 
 type UserId = UserId of Guid

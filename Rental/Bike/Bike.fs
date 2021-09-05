@@ -3,7 +3,11 @@
 open System
 open BikeRental
 
+type Price = Price of decimal
 type BikeId = BikeId of Guid
+
+module Price =
+    let toAmount (Price price) = Amount price
 
 type Bike =
     { BikeId: BikeId
