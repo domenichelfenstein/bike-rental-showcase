@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Registration
 
+open BikeRental
+
 type User =
     { UserId: UserId
       Username: Username

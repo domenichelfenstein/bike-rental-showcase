@@ -1,5 +1,7 @@
 ﻿namespace BikeRental
 
+open System
+
 [<CustomEquality; CustomComparison>]
 type Instant =
     | Instant of NodaTime.Instant
@@ -32,3 +34,6 @@ type Balance =
     | Balance of decimal
     static member (-) (Balance balance, Price price) = Balance (balance - price)
     static member (-) (Balance balance, Amount amount) = Balance (balance - amount)
+    static member (+) (Balance balance, Amount amount) = Balance (balance + amount)
+
+type UserId = UserId of Guid

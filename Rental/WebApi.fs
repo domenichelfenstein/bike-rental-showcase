@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Rental
 
 open System
+open BikeRental
 open Microsoft.AspNetCore.Authorization
 open Microsoft.AspNetCore.Mvc
 open FsToolkit.ErrorHandling

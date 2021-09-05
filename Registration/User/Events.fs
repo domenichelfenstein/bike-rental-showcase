@@ -3,7 +3,6 @@
 open System
 open BikeRental
 
-type UserId = UserId of Guid
 type Username = Username of string
 type PhoneNumber = PhoneNumber of string
 type PasswordHash = PasswordHash of string

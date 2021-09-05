@@ -2,6 +2,7 @@
 
 open System.Security.Cryptography
 open System.Text
+open BikeRental
 open BikeRental.Registration
 open BikeRental.Registration.Features
 

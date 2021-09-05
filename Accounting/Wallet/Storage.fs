@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Accounting
 
+open BikeRental
+
 type WalletEventStorage =
     abstract PersistEvent : WalletEvent -> Async<unit>
     abstract GetWalletEventsByUserId : UserId -> Async<WalletEvent list>

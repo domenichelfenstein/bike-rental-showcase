@@ -1,7 +1,6 @@
 ﻿namespace BikeRental.Starter
 
 open System
-open BikeRental
 open BikeRental.Accounting
 open BikeRental.Accounting.Features
 open BikeRental.Registration
@@ -14,22 +13,14 @@ type Facades =
       Rental: RentalFacade }
 
 module Adapters =
-    let createWallet (facade: AccountingFacade) (BikeRental.Registration.UserId userId) =
-        facade.CreateWallet
-            (Guid.NewGuid() |> WalletId)
-            { CreateWallet.Data.UserId = BikeRental.Accounting.UserId userId }
+    let createWallet (facade: AccountingFacade) userId =
+        facade.CreateWallet(Guid.NewGuid() |> WalletId) { CreateWallet.Data.UserId = userId }
 
-    let withdrawFromUserBalance
-        (facade: AccountingFacade)
-        (amount: Amount)
-        (BikeRental.Rental.UserId userId)
-        =
+    let withdrawFromUserBalance (facade: AccountingFacade) amount userId =
         async {
-            let accountingUserId = BikeRental.Accounting.UserId userId
-
             let! result =
                 facade.Withdraw
-                    { Withdraw.Data.UserId = accountingUserId
+                    { Withdraw.Data.UserId = userId
                       Amount = amount }
 
             return
@@ -43,8 +34,7 @@ module FacadesCreator =
     let create (_configuration: IConfiguration) =
         let uiChangedEvent = Event<string * obj>()
 
-        let accountingServices =
-            { AccountingServices.GetInstant = Services.getInstant }
+        let accountingServices = { AccountingServices.GetInstant = Services.getInstant }
 
         let accountingChanged msg (WalletId walletId) =
             uiChangedEvent.Trigger(walletId.ToString(), msg)

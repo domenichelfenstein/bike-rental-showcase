@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Accounting
 
 open System
+open BikeRental
 open Microsoft.AspNetCore.Authorization
 open Microsoft.AspNetCore.Mvc
 

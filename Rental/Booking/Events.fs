@@ -4,7 +4,6 @@ open System
 open BikeRental
 
 type BookingId = BookingId of Guid
-type UserId = UserId of Guid
 
 type BookingEventData =
     | Booked of UserId

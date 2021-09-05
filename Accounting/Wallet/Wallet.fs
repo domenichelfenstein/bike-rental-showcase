@@ -19,17 +19,13 @@ module Wallet =
                         { Wallet.WalletId = event.WalletId
                           UserId = event.UserId
                           Balance = Balance 0m }
-                | Some old, Withdrawn (Amount amount) ->
-                    let oldBalance = old.Balance |> (fun (Balance b) -> b)
-
+                | Some old, Withdrawn amount ->
                     Some
                         { old with
-                              Balance = Balance(oldBalance - amount) }
-                | Some old, Deposited (Amount amount) ->
-                    let oldBalance = old.Balance |> (fun (Balance b) -> b)
-
+                              Balance = old.Balance - amount }
+                | Some old, Deposited amount ->
                     Some
                         { old with
-                              Balance = Balance(oldBalance + amount) }
+                              Balance = old.Balance + amount }
                 | old, _ -> old)
             None
