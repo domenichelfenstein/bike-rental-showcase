@@ -28,7 +28,8 @@
     <ItemGroup>
       <Compile Include="Example.fs" />
       <Compile Include="Helper.fs" />
-      <Compile Include="Rental\Booking\StatusComputation.fs" />
+      <Compile Include="Rental\InstantFacts.fs" />
+      <Compile Include="Rental\Booking\StatusComputationFacts.fs" />
     </ItemGroup>
 
 </Project>

@@ -19,10 +19,7 @@ type AvailabilityStatus =
 module Booking =
     let projectSingle (events: BookingEvent list) =
         events
-        |> List.sortBy
-            (fun x ->
-                let (Instant instant) = x.Instant
-                instant.ToUnixTimeTicks())
+        |> List.sortBy (fun x -> x.Instant)
         |> List.fold
             (fun bookingOption event ->
                 match bookingOption, event.Data with
@@ -46,23 +43,22 @@ module Booking =
         |> List.map (fun (_, g) -> g |> projectSingle)
         |> List.choose id
 
-    let getStatusOfBike (Instant instant) userId (bookingsOfBike: Booking list) =
-        let ticks = instant.ToUnixTimeTicks()
-
+    let getStatusOfBike (instant: Instant) userId (bookingsOfBike: Booking list) =
         let unreleasedBookings =
             bookingsOfBike
-            |> List.filter (fun { Start = (Instant start) } -> start.ToUnixTimeTicks() <= ticks)
+            |> List.filter (fun b -> b.Start <= instant)
             |> List.filter
                 (fun b ->
                     match b.End with
                     | None -> true
-                    | Some (Instant x) -> x.ToUnixTimeTicks() >= ticks)
+                    | Some x -> x >= instant)
 
         let hasUnreleasedBookings = unreleasedBookings |> List.isEmpty |> not
 
         match hasUnreleasedBookings with
         | true ->
             let lastBooking = unreleasedBookings |> List.last
+
             match lastBooking.UserId = userId with
             | true -> Releasable lastBooking.BookingId
             | false -> NotAvailable
