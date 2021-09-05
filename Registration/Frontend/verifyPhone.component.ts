@@ -25,7 +25,7 @@ import { map } from "rxjs/operators";
                 <div class="form-group">
                     <label class="form-label" for="verificationCode">Verification Code</label>
                     <input [(ngModel)]="verificationCode" name="verificationCode" class="form-input" type="text"
-                           id="verificationCode"
+                           id="verificationCode" placeholder="Just type in Xyz"
                            required>
                 </div>
                 <div class="card-footer">

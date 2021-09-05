@@ -8,6 +8,7 @@ import { AuthService } from "./auth.service";
 import { MustBeLoggedInGuard } from "./mustBeLoggedIn.guard";
 import { MustNotBeLoggedInGuard } from "./mustNotBeLoggedIn.guard";
 import { ChangeService } from "./change.service";
+import { AccountingModule } from "../Accounting/Frontend/accounting.module";
 
 const routes: Routes = [
     {
@@ -34,7 +35,8 @@ const routes: Routes = [
     ],
     imports: [
         RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModulesStrategy }),
-        BrowserModule
+        BrowserModule,
+        AccountingModule
     ],
     providers: [AuthService, MustBeLoggedInGuard, MustNotBeLoggedInGuard, ChangeService],
     bootstrap: [AppComponent]

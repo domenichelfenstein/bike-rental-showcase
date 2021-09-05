@@ -4,7 +4,9 @@ import { AuthService } from "../../main-frontend-app/auth.service";
 
 @Component({
     template: `
-        <user-wallet></user-wallet><button (click)="deposit()" class="btn">Deposit</button>`,
+        <h1><user-wallet></user-wallet></h1>
+        <button (click)="deposit()" class="btn">Deposit</button>`,
+    styleUrls: [ "deposit.page.scss" ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 

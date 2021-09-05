@@ -7,8 +7,6 @@ import { mergeMap, shareReplay } from "rxjs/operators";
 
 @Component({
     template: `
-        <user-wallet></user-wallet>
-
         <div class="toast toast-error" *ngIf="displayError | async">
             <button class="btn btn-clear float-right" (click)="displayError.next(false)"></button>
             Could not rent bike.

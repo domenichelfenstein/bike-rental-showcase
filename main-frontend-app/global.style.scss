@@ -6,6 +6,39 @@ body {
     height: 100vh;
 }
 
+app-root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    header {
+        flex: 0 0 auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        a {
+            flex: 1 1 auto;
+        }
+
+        nav {
+            flex: 0 0 auto;
+        }
+    }
+
+    main {
+        flex: 1 1 auto;
+        overflow: auto;
+    }
+
+    footer {
+        flex: 0 0 auto;
+        padding: 1rem;
+        background: #f7f8f9;
+    }
+}
+
 // spectre modifications
 .card {
     box-shadow: 0 0.25rem 1rem rgb(48 55 66 / 15%);

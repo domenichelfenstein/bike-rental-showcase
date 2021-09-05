@@ -8,7 +8,10 @@ import { PricePipe } from "../../main-frontend-app/price.pipe";
 
 @Component({
     selector: "wallet",
-    template: `Balance: {{ balanceResult | async }}`,
+    template: `
+        <span [class.text-error]="(balance | async) == 0">
+            Balance: {{ balanceResult | async }}
+        </span>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -16,6 +19,7 @@ export class WalletComponent implements OnChanges {
     @Input() walletId: string | undefined;
 
     public balanceResult: Observable<string> | undefined;
+    public balance: Observable<number | undefined> | undefined;
 
     constructor(
         private authService: AuthService,
@@ -25,10 +29,14 @@ export class WalletComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.walletId != undefined) {
-            const balance = this.changeService.listeningForChangesWithInstantLoad<any>(this.walletId).pipe(
+            this.balance = this.changeService.listeningForChangesWithInstantLoad<any>(this.walletId).pipe(
                 mergeMap(_ => this.authService.getResult<Wallet>(`/accounting/wallet/${this.walletId}`)),
                 filter(result => result instanceof ResultOk),
-                map(result => result instanceof ResultOk ? PricePipe.transform(result.value.balance) : PricePipe.transform(undefined)),
+                map(result => result instanceof ResultOk ? result.value.balance : undefined),
+                shareReplay()
+            );
+            const balance = this.balance.pipe(
+                map(balance => PricePipe.transform(balance)),
                 shareReplay()
             );
 

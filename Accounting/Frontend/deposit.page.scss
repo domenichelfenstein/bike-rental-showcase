@@ -1,0 +1,14 @@
+﻿:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    user-wallet ::ng-deep a {
+        text-decoration: none;
+
+        span {
+            color: #bcc3ce!important;
+        }
+    }
+}
