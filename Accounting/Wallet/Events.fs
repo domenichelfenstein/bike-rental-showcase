@@ -5,7 +5,6 @@ open BikeRental
 
 type WalletId = WalletId of Guid
 type UserId = UserId of Guid
-type Amount = Amount of decimal
 
 type WalletEventData =
     | Created

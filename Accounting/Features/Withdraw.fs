@@ -23,11 +23,8 @@ module Withdraw =
                 Wallet.project events
                 |> Result.requireSome AccountingError.WalletNotFound
 
-            let balance = wallet.Balance |> (fun (Balance b) -> b)
-            let amount = data.Amount |> (fun (Amount a) -> a)
-
             do!
-                balance - amount >= 0m
+                wallet.Balance - data.Amount >= Balance 0m
                 |> Result.requireTrue AccountingError.UserBalanceNotSufficient
 
             do!

@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Starter
 
 open System
+open BikeRental
 open BikeRental.Accounting
 open BikeRental.Accounting.Features
 open BikeRental.Registration
@@ -20,17 +21,16 @@ module Adapters =
 
     let withdrawFromUserBalance
         (facade: AccountingFacade)
-        (BikeRental.Rental.Amount amount)
+        (amount: Amount)
         (BikeRental.Rental.UserId userId)
         =
         async {
             let accountingUserId = BikeRental.Accounting.UserId userId
-            let accountingAmount = BikeRental.Accounting.Amount amount
 
             let! result =
                 facade.Withdraw
                     { Withdraw.Data.UserId = accountingUserId
-                      Amount = accountingAmount }
+                      Amount = amount }
 
             return
                 match result with

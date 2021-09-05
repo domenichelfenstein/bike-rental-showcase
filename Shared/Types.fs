@@ -24,3 +24,11 @@ type Instant =
     override x.GetHashCode() =
         let nodaX = x |> (fun (Instant x) -> x)
         nodaX.GetHashCode()
+
+type Amount = Amount of decimal
+type Price = Price of decimal
+
+type Balance =
+    | Balance of decimal
+    static member (-) (Balance balance, Price price) = Balance (balance - price)
+    static member (-) (Balance balance, Amount amount) = Balance (balance - amount)

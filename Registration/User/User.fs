@@ -1,7 +1,5 @@
 ﻿namespace BikeRental.Registration
 
-open BikeRental
-
 type User =
     { UserId: UserId
       Username: Username
@@ -25,9 +23,7 @@ type UserState =
 module User =
     let projectState (events: UserEvent list) =
         events
-        |> List.sortBy (fun x ->
-            let (Instant instant) = x.Instant
-            instant.ToUnixTimeTicks())
+        |> List.sortBy (fun x -> x.Instant)
         |> List.fold
             (fun oldState event ->
                 match oldState, event.Data with

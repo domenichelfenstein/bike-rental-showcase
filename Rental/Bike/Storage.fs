@@ -1,5 +1,6 @@
 ﻿namespace BikeRental.Rental
 
+open BikeRental
 open FSharpx.Collections
 open FSharp.Data
 

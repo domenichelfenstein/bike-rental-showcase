@@ -2,8 +2,6 @@
 
 open BikeRental
 
-type Balance = Balance of decimal
-
 type Wallet =
     { WalletId: WalletId
       UserId: UserId
@@ -12,10 +10,7 @@ type Wallet =
 module Wallet =
     let project (events: WalletEvent list) =
         events
-        |> List.sortBy
-            (fun x ->
-                let (Instant instant) = x.Instant
-                instant.ToUnixTimeTicks())
+        |> List.sortBy (fun x -> x.Instant)
         |> List.fold
             (fun oldState event ->
                 match oldState, event.Data with

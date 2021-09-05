@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Rental
 
 open System
+open BikeRental
 
 type BikeId = BikeId of Guid
 
