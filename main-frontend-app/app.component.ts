@@ -1,13 +1,23 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { AuthService } from "./auth.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-root',
     template: `
         <header>
             <a [routerLink]="['rental', 'bikes']"><h1>Bike rental</h1></a>
-            <nav>
-                <user-wallet></user-wallet>
-            </nav>
+            <div class="placeholder"></div>
+            <div class="dropdown dropdown-right" *ngIf="authService.isLoggedInChange | async">
+                <a class="dropdown-toggle" tabindex="0">
+                    <figure class="avatar avatar-md" data-initial="DH" style="background-color: #5755d9;"></figure>
+                    <user-wallet [clickable]="false"></user-wallet>
+                </a>
+                <ul class="menu">
+                    <li class="menu-item"><a [routerLink]="['accounting', 'deposit']">Deposit</a></li>
+                    <li class="menu-item"><a (click)="logout()">Logout</a></li>
+                </ul>
+            </div>
         </header>
         <main class="container">
             <router-outlet></router-outlet>
@@ -20,4 +30,14 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     styleUrls: [ "global.style.scss" ]
 })
 export class AppComponent {
+    constructor(
+        public authService: AuthService,
+        private router: Router
+    ) {
+    }
+
+    public logout = async () => {
+        this.authService.logout();
+        await this.router.navigate(["/", "registration", "start"]);
+    }
 }

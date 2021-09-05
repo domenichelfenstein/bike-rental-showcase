@@ -19,10 +19,14 @@ app-root {
         align-items: center;
 
         a {
+            flex: 0 0 auto;
+        }
+
+        .placeholder {
             flex: 1 1 auto;
         }
 
-        nav {
+        .dropdown {
             flex: 0 0 auto;
         }
     }

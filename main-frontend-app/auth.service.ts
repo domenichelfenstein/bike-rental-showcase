@@ -1,11 +1,18 @@
 ﻿import { Injectable } from "@angular/core";
 import { fetchGet, fetchGetResult, fetchPost } from "./ngFetch";
 import { Result, ResultError, ResultOk } from "../Starter/CommonTypes";
-import { getCookie, setCookie } from "./cookies";
+import { clearCookie, getCookie, setCookie } from "./cookies";
+import { NavigationEnd, Router } from "@angular/router";
+import { filter, map, shareReplay } from "rxjs/operators";
 
 @Injectable()
 export class AuthService {
     private static TokenKey = "bikeRental_token";
+
+    constructor(
+        private router: Router
+    ) {
+    }
 
     public get = <TOut>(url: string) => fetchGet<TOut>(url, this.getHeaders());
     public getResult = <TOut>(url: string) => fetchGetResult<TOut>(url, this.getHeaders());
@@ -27,6 +34,10 @@ export class AuthService {
         return result;
     }
 
+    public logout = () => {
+        clearCookie(AuthService.TokenKey);
+    }
+
     private getHeaders = (): HeadersInit | undefined => {
         const tokenFromCookie = getCookie(AuthService.TokenKey);
         return tokenFromCookie == undefined ? undefined : {
@@ -38,6 +49,12 @@ export class AuthService {
         const tokenFromCookie = getCookie(AuthService.TokenKey);
         return tokenFromCookie != undefined;
     }
+
+    public isLoggedInChange = this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(_ => this.isLoggedIn()),
+        shareReplay()
+    );
 
     public getUserInfo = (): Result<UserInfo> => {
         const tokenFromCookie = getCookie(AuthService.TokenKey);

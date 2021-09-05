@@ -1,17 +1,22 @@
-﻿import { ChangeDetectionStrategy, Component} from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AuthService } from "../../main-frontend-app/auth.service";
 import { ResultOk } from "../../Starter/CommonTypes";
 
 @Component({
     selector: "user-wallet",
     template: `
-        <a routerLinkActive="active" [routerLink]="['/', 'accounting', 'deposit']">
+        <a routerLinkActive="active" [routerLink]="['/', 'accounting', 'deposit']" *ngIf="clickable; else noLink">
             <wallet [walletId]="(wallet | async)?.walletId"></wallet>
-        </a>`,
+        </a>
+        <ng-template #noLink>
+            <wallet [walletId]="(wallet | async)?.walletId"></wallet>
+        </ng-template>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserWalletComponent {
     public wallet: Promise<Wallet> | undefined;
+
+    @Input() clickable = true;
 
     constructor(
         authService: AuthService
