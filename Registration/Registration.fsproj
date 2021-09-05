@@ -18,6 +18,7 @@
         <Compile Include="Features\VerifyPhone.fs" />
         <Compile Include="Features\CompleteRegistration.fs" />
         <Compile Include="Features\CreateToken.fs" />
+        <Compile Include="Features\QueryInitials.fs" />
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
         <Compile Include="WebApi.fs" />
@@ -35,6 +36,7 @@
       <TypeScriptCompile Include="Frontend\startRegistration.component.ts" />
       <TypeScriptCompile Include="Frontend\verifyPhone.component.ts" />
       <TypeScriptCompile Include="Frontend\completeRegistration.component.ts" />
+      <TypeScriptCompile Include="Frontend\userBadge.component.ts" />
       <TypeScriptCompile Include="Frontend\registration.module.ts" />
     </ItemGroup>
 

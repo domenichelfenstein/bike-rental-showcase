@@ -33,3 +33,7 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
             (User.getUser storages.UserEvents)
             services.GetPasswordHash
             services.CreateAuthToken
+
+    member self.GetInitials =
+        QueryInitials.query
+            storages.UserEvents.QueryByUsername

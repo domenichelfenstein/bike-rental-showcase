@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
             <div class="placeholder"></div>
             <div class="dropdown dropdown-right" *ngIf="authService.isLoggedInChange | async">
                 <a class="dropdown-toggle" tabindex="0">
-                    <figure class="avatar avatar-md" data-initial="DH" style="background-color: #5755d9;"></figure>
+                    <user-badge></user-badge>
                     <user-wallet [clickable]="false"></user-wallet>
                 </a>
                 <ul class="menu">
@@ -38,6 +38,6 @@ export class AppComponent {
 
     public logout = async () => {
         this.authService.logout();
-        await this.router.navigate(["/", "registration", "start"]);
+            await this.router.navigate(["/", "registration", "start"]);
     }
 }

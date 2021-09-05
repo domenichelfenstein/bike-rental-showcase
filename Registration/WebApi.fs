@@ -32,3 +32,7 @@ type RegistrationApiController(facade: RegistrationFacade) =
     [<Route("login")>]
     member self.Start([<FromBody>] data) =
         asyncResult { return! facade.CreateToken data }
+
+    [<HttpGet>]
+    [<Route("initials/{username}")>]
+    member self.GetUser([<FromRoute>] username) = facade.GetInitials(Username username)

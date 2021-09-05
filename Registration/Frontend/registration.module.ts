@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { VerifiyPhonePageComponent } from "./verifyPhone.component";
 import { CompleteRegistrationPageComponent } from "./completeRegistration.component";
+import { UserBadgeComponent } from "./userBadge.component";
 
 const routes: Routes = [
     { path: "start", component: StartRegistrationPageComponent },
@@ -20,7 +21,11 @@ const routes: Routes = [
     declarations: [
         StartRegistrationPageComponent,
         VerifiyPhonePageComponent,
-        CompleteRegistrationPageComponent
+        CompleteRegistrationPageComponent,
+        UserBadgeComponent
+    ],
+    exports: [
+        UserBadgeComponent
     ],
     imports: [
         RouterModule.forChild(routes),
