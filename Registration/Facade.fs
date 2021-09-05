@@ -3,8 +3,6 @@
 open BikeRental.Registration.Features
 
 type RegistrationFacade(services: RegistrationServices, storages: RegistrationStorages) =
-    let getInstant = services.GetNodaInstant >> Instant
-
     member self.StartRegistration =
         StartRegistration.execute
             (User.getUser storages.UserEvents)
@@ -12,7 +10,7 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
             storages.OpenVerifications.Add
             services.GenerateVerificationCode
             services.SendVerificationCode
-            getInstant
+            services.GetInstant
 
     member self.VerifyPhone =
         VerifyPhone.execute
@@ -26,7 +24,7 @@ type RegistrationFacade(services: RegistrationServices, storages: RegistrationSt
             storages.UserEvents.PersistEvent
             services.CreateWallet
             services.GetPasswordHash
-            getInstant
+            services.GetInstant
 
     member self.CreateToken =
         CreateToken.execute

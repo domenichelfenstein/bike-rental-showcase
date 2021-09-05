@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Fundamentals.fs" />
         <Compile Include="User\Events.fs" />
         <Compile Include="User\Storage.fs" />
         <Compile Include="User\User.fs" />
@@ -26,10 +25,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-        <PackageReference Include="NodaTime" Version="3.0.0" />
-        <PackageReference Include="FSharpx.Extras" Version="2.5.0" />
-        <PackageReference Include="FsToolkit.ErrorHandling" Version="2.0.0" />
-        <PackageReference Include="FsToolkit.ErrorHandling.TaskResult" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -38,6 +33,10 @@
       <TypeScriptCompile Include="Frontend\completeRegistration.component.ts" />
       <TypeScriptCompile Include="Frontend\userBadge.component.ts" />
       <TypeScriptCompile Include="Frontend\registration.module.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shared\Shared.fsproj" />
     </ItemGroup>
 
 </Project>

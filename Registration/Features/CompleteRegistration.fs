@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Registration.Features
 
 open System
+open BikeRental
 open BikeRental.Registration
 open FSharpx
 open FsToolkit.ErrorHandling

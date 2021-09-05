@@ -1,8 +1,5 @@
 ﻿namespace BikeRental.Rental
 
-[<NoComparison>]
-type Instant = Instant of NodaTime.Instant
-
 type Price = Price of decimal
 type Amount = Amount of decimal
 

@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Rental
 
+open BikeRental
+
 type RentalStorages =
     { Bikes: BikeStorage
       BookingEvents: BookingEventStorage }
@@ -18,6 +20,6 @@ module RentalStorageCreator =
 
 type RentalServices =
     {
-        GetNodaInstant: unit -> NodaTime.Instant
+        GetInstant: unit -> Instant
         WithdrawAmount: Amount -> UserId -> Async<bool>
     }

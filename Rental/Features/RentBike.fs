@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Rental.Features
 
 open System
+open BikeRental
 open BikeRental.Rental
 open FsToolkit.ErrorHandling
 

@@ -21,6 +21,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Rental", "Rental\Rental.fsp
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Tests\Tests.fsproj", "{DAC631B7-2835-4541-9E2D-3410626E8431}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Shared", "Shared\Shared.fsproj", "{247E4AD6-86B0-4323-9A26-D4C9BFBF8720}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +49,9 @@ Global
 		{DAC631B7-2835-4541-9E2D-3410626E8431}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAC631B7-2835-4541-9E2D-3410626E8431}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAC631B7-2835-4541-9E2D-3410626E8431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{247E4AD6-86B0-4323-9A26-D4C9BFBF8720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247E4AD6-86B0-4323-9A26-D4C9BFBF8720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247E4AD6-86B0-4323-9A26-D4C9BFBF8720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247E4AD6-86B0-4323-9A26-D4C9BFBF8720}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

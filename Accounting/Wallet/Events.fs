@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Accounting
 
 open System
+open BikeRental
 
 type WalletId = WalletId of Guid
 type UserId = UserId of Guid

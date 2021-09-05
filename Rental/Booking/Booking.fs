@@ -1,5 +1,6 @@
 ﻿namespace BikeRental.Rental
 
+open BikeRental
 open FSharpx.Collections
 
 type Booking =

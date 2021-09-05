@@ -1,5 +1,6 @@
 ﻿namespace BikeRental.Registration
 
+open BikeRental
 open BikeRental.Registration.Features
 
 type RegistrationStorages =
@@ -21,7 +22,7 @@ module RegistrationStorageCreator =
         | _ -> failwith "not implemented"
 
 type RegistrationServices = {
-    GetNodaInstant : unit -> NodaTime.Instant
+    GetInstant : unit -> Instant
     SendVerificationCode : SendVerificationCode
     GenerateVerificationCode : GenerateVerificationCode
     GetPasswordHash : string -> PasswordHash

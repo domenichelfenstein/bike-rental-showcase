@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Accounting
 
+open BikeRental
+
 type Balance = Balance of decimal
 
 type Wallet =

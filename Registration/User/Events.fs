@@ -1,6 +1,7 @@
 ﻿namespace BikeRental.Registration
 
 open System
+open BikeRental
 
 type UserId = UserId of Guid
 type Username = Username of string

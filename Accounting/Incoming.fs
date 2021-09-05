@@ -1,5 +1,7 @@
 ﻿namespace BikeRental.Accounting
 
+open BikeRental
+
 type AccountingStorages = { WalletEvents: WalletEventStorage }
 
 type SqlContext = { ConnectionString: string }
@@ -17,5 +19,5 @@ module AccountingStorageCreator =
 
 
 type AccountingServices = {
-    GetNodaInstant : unit -> NodaTime.Instant
+    GetInstant : unit -> Instant
 }
