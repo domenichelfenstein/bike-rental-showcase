@@ -6,14 +6,14 @@ open System
 type Instant =
     | Instant of NodaTime.Instant
     member a.innerCompareTo(b: obj) =
-        let nodaA = a |> (fun (Instant x) -> x)
+        let (Instant nodaA) = a
 
-        let instantB =
+        let nodaB =
             match b with
-            | :? Instant as instant -> instant
-            | _ -> Instant NodaTime.Instant.MinValue
-
-        let nodaB = instantB |> (fun (Instant x) -> x)
+            | :? Instant as instant ->
+                let (Instant noda) = instant
+                noda
+            | _ -> NodaTime.Instant.MinValue
 
         match nodaA.ToUnixTimeTicks() - nodaB.ToUnixTimeTicks() with
         | x when x < 0L -> -1
@@ -27,7 +27,7 @@ type Instant =
     override a.Equals(b) = a.innerCompareTo b = 0
 
     override x.GetHashCode() =
-        let nodaX = x |> (fun (Instant x) -> x)
+        let (Instant nodaX) = x
         nodaX.GetHashCode()
 
 type Amount = Amount of decimal
