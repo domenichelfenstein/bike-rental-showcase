@@ -8,4 +8,5 @@ node_modules/
 *.fs.js
 *.fs.ts
 .fable/
-/Starter/wwwroot/
+/Starter/wwwroot/**/*
+!.gitkeep

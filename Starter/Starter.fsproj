@@ -34,7 +34,7 @@
       <TypeScriptCompile Include="CommonTypes.ts" />
     </ItemGroup>
 
-    <Target Name="NpmInstall">
+    <Target Name="NpmInstall" BeforeTargets="BeforeBuild">
         <Exec WorkingDirectory="$(Outside)" Command="npm ci" />
     </Target>
     <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild" Condition="'$(Configuration)'=='RELEASE'">
