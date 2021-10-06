@@ -8,6 +8,11 @@ This showcase demonstrates how I would tackle such an exercise.
 ### Warning
 Some functions are far from production ready (they are annotated as such). Please do not blindly copy everything in this repo.
 
+### Prerequisits
+The following software should be installed on your machine:
+- Either Visual Studio or JetBrains Rider (tested with version 2021.2.1)
+- Node JS (tested with version 14.17.0)
+
 ### How to start?
 Simply open `BikeRentalExercise.sln` in Visual Studio or JetBrains Rider and run the `Starter` project (In the `03_EntryPoint` folder). From this project
 (and `Startup.fs` in particular) you can navigate yourself through the code.
