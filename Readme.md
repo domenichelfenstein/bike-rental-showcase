@@ -6,7 +6,7 @@ to create a similar example (roughly the same task) but this time written in F# 
 This showcase demonstrates how I would tackle such an exercise.
 
 ### Warning
-Some functions are far from production ready (they are annotated as such). Please do not blindly copy everything in this repo.
+Some functions are far from production ready (they are annotated as such). Please do not blindly copy everything from this repo.
 
 ### Prerequisits
 The following software should be installed on your machine:
@@ -30,7 +30,7 @@ Actually there are probably more tests then it first seems: F# provides us with 
 
 Another aspect is the use of types such as `Result` in combination with the corresponding computational expression: Using this combination it is quite hard to write defective code.
 The only thing that can go wrong is if an operation misses something (e.g. the bike rent operation would not withdraw money from the users balance). Here I'm on the fence if tests
-actually help us developers. Because if we miss a sub task we might it miss it in the test as well. However, this is up for debate.
+actually help us developers. Because if we miss a sub task we might miss it in the test as well. However, this is up for debate.
 
 ### Issues
 I'm happy to get feedback for my code and tips how to improve it. Please be fair and behave nicely in the issues section.
