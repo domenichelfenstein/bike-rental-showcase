@@ -64,8 +64,7 @@
                         },
                         "development": {
                             "browserTarget": "bike-rental:build:development",
-                            "port": 4201,
-                            "baseHref": "/frontend"
+                            "port": 4201
                         }
                     },
                     "defaultConfiguration": "development"
