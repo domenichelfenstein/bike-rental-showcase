@@ -2,18 +2,18 @@
 
 open BikeRental
 open BikeRental.Rental
+open NUnit.Framework
 open Testing
-open Xunit
 open Swensen.Unquote
 
-[<Fact>]
+[<Test>]
 let ``Empty list`` () =
     let result =
         Booking.getStatusOfBike (Example.create ()) (Example.create ()) []
 
     result =! Bookable
 
-[<Fact>]
+[<Test>]
 let ``Unreleased booking before`` () =
     let queryInstant = "2021-09-04 09:00" |> Instant.parse
 
@@ -27,7 +27,7 @@ let ``Unreleased booking before`` () =
 
     result =! NotAvailable
 
-[<Fact>]
+[<Test>]
 let ``Unreleased booking before from same user`` () =
     let queryInstant = "2021-09-04 09:00" |> Instant.parse
 
@@ -41,7 +41,7 @@ let ``Unreleased booking before from same user`` () =
 
     result =! Releasable booking.BookingId
 
-[<Fact>]
+[<Test>]
 let ``Unreleased booking after`` () =
     let queryInstant = "2021-09-04 09:00" |> Instant.parse
 
@@ -55,7 +55,7 @@ let ``Unreleased booking after`` () =
 
     result =! Bookable
 
-[<Fact>]
+[<Test>]
 let ``Released booking before`` () =
     let queryInstant = "2021-09-04 09:00" |> Instant.parse
 
@@ -69,7 +69,7 @@ let ``Released booking before`` () =
 
     result =! Bookable
 
-[<Fact>]
+[<Test>]
 let ``Released booking in future`` () =
     let queryInstant = "2021-09-04 09:00" |> Instant.parse
 
@@ -83,7 +83,7 @@ let ``Released booking in future`` () =
 
     result =! NotAvailable
 
-[<Fact>]
+[<Test>]
 let ``Released booking with unreleased booking. Both before`` () =
     let queryInstant = "2021-09-04 09:00" |> Instant.parse
 

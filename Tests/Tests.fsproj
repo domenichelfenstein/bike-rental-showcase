@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <WarnOn>3390;$(WarnOn)</WarnOn>
         <AssemblyName>BikeRental.Tests</AssemblyName>
@@ -15,14 +15,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FsCheck" Version="2.16.2" />
-      <PackageReference Include="FsUnit.xUnit" Version="4.0.6" />
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+      <PackageReference Include="FsCheck" Version="2.16.5" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+      <PackageReference Include="NUnit" Version="3.13.3" />
+      <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
       <PackageReference Include="Unquote" Version="6.1.0" />
-      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

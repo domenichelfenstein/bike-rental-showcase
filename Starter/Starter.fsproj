@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>BikeRental.Starter</AssemblyName>
         <RootNamespace>BikeRental.Starter</RootNamespace>
 
@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FSharp.SystemTextJson" Version="0.17.4" />
-        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9" />
+        <PackageReference Include="FSharp.SystemTextJson" Version="1.1.23" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.4" />
     </ItemGroup>
 
     <ItemGroup>
