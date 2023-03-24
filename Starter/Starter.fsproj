@@ -6,12 +6,11 @@
         <RootNamespace>BikeRental.Starter</RootNamespace>
 
         <WWWRoot>\wwwroot\</WWWRoot>
-        <Outside>..\</Outside>
+        <Frontend>..\Frontend\</Frontend>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FSharp.SystemTextJson" Version="1.1.23" />
-        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.4" />
     </ItemGroup>
 
     <ItemGroup>
@@ -33,13 +32,5 @@
     <ItemGroup>
       <TypeScriptCompile Include="CommonTypes.ts" />
     </ItemGroup>
-
-    <Target Name="NpmInstall" BeforeTargets="BeforeBuild">
-        <Exec WorkingDirectory="$(Outside)" Command="npm ci" />
-    </Target>
-    <Target Name="NpmRunBuild" DependsOnTargets="NpmInstall" BeforeTargets="BeforeBuild" Condition="'$(Configuration)'=='RELEASE'">
-        <RemoveDir Directories="$(WWWRoot)" />
-        <Exec WorkingDirectory="$(Outside)" Command="npm run build" />
-    </Target>
 
 </Project>

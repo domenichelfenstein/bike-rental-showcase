@@ -17,7 +17,6 @@ open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.FileProviders
 open Microsoft.Extensions.Hosting
-open Microsoft.AspNetCore.SpaServices.AngularCli
 
 type Startup(configuration: IConfiguration) =
     member _.Configuration = configuration
@@ -25,26 +24,20 @@ type Startup(configuration: IConfiguration) =
     member self.ConfigureServices(services: IServiceCollection) =
         services
             .AddAuthentication()
-            .AddScheme<AuthenticationSchemeOptions, FakeAuthenticationHandler>(FakeSchemeName, (fun _ -> ()))
+            .AddScheme<AuthenticationSchemeOptions, FakeAuthenticationHandler> (FakeSchemeName, (fun _ -> ()))
         |> ignore
 
-        services.AddAuthorization() |> ignore
+        services.AddAuthorization () |> ignore
 
-        let registrationAssemblyPart =
-            typeof<RegistrationFacade>.Assembly
-            |> AssemblyPart
+        let registrationAssemblyPart = typeof<RegistrationFacade>.Assembly |> AssemblyPart
 
         let accountingAssemblyPart = typeof<AccountingId>.Assembly |> AssemblyPart
 
         let parts =
-            services
-                .AddControllers()
-                .AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add(JsonFSharpConverter()))
-                .PartManager
-                .ApplicationParts
+            services.AddControllers().AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add (JsonFSharpConverter ())).PartManager.ApplicationParts
 
-        parts.Add(registrationAssemblyPart)
-        parts.Add(accountingAssemblyPart)
+        parts.Add (registrationAssemblyPart)
+        parts.Add (accountingAssemblyPart)
 
         let uiChangedEvent, facades = FacadesCreator.create self.Configuration
 
@@ -52,58 +45,49 @@ type Startup(configuration: IConfiguration) =
             .AddSingleton<Event<string * obj>>(fun _ -> uiChangedEvent)
             .AddSingleton<RegistrationFacade>(fun _ -> facades.Registration)
             .AddSingleton<AccountingFacade>(fun _ -> facades.Accounting)
-            .AddSingleton<RentalFacade>(fun _ -> facades.Rental)
+            .AddSingleton<RentalFacade> (fun _ -> facades.Rental)
         |> ignore
 
         ()
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
         let fileProvider =
-            new PhysicalFileProvider(Directory.GetCurrentDirectory() + "/wwwroot")
+            new PhysicalFileProvider (Directory.GetCurrentDirectory () + "/wwwroot")
 
-        let pathString = PathString("")
+        let pathString = PathString ("")
 
-        let defaultFilesOptions = DefaultFilesOptions()
+        let defaultFilesOptions = DefaultFilesOptions ()
         defaultFilesOptions.RequestPath <- pathString
         defaultFilesOptions.FileProvider <- fileProvider
         defaultFilesOptions.DefaultFileNames <- [| "index.html" |]
 
-        let staticFileOptions = StaticFileOptions()
+        let staticFileOptions = StaticFileOptions ()
         staticFileOptions.RequestPath <- pathString
         staticFileOptions.FileProvider <- fileProvider
 
-        let eventStream = app.ApplicationServices.GetService<Event<string * obj>>()
+        let eventStream = app.ApplicationServices.GetService<Event<string * obj>> ()
+
         app
             .UseRouting()
             .UseAuthentication()
             .UseAuthorization()
             .UseWebSockets()
-            .UseEndpoints(fun endpoints -> endpoints.MapControllers() |> ignore)
-            .Use(WebSocket.wsMiddleware eventStream.Publish)
+            .UseEndpoints(fun endpoints -> endpoints.MapControllers () |> ignore)
+            .Use (WebSocket.wsMiddleware eventStream.Publish)
         |> ignore
 
 #if DEBUG
-        app
-            .UseDeveloperExceptionPage()
-            .UseSpa(fun spa ->
-                spa.Options.SourcePath <- "../"
-                spa.UseAngularCliServer("start")
-                ())
+        app.UseDeveloperExceptionPage () |> ignore
 #endif
-#if RELEASE
-        app
-            .UseDefaultFiles(defaultFilesOptions)
-            .UseStaticFiles(staticFileOptions)
-            .UseSpa(fun spa -> ())
-#endif
+        app.UseDefaultFiles(defaultFilesOptions).UseStaticFiles (staticFileOptions) |> ignore
 
 module Program =
     [<EntryPoint>]
     let main args =
         Host
             .CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(fun webBuilder -> webBuilder.UseStartup<Startup>() |> ignore)
+            .ConfigureWebHostDefaults(fun webBuilder -> webBuilder.UseStartup<Startup> () |> ignore)
             .Build()
-            .Run()
+            .Run ()
 
         0
