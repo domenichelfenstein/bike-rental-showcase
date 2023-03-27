@@ -17,6 +17,7 @@ open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.FileProviders
 open Microsoft.Extensions.Hosting
+open Microsoft.AspNetCore.SpaServices
 
 type Startup(configuration: IConfiguration) =
     member _.Configuration = configuration
@@ -56,14 +57,14 @@ type Startup(configuration: IConfiguration) =
 
         let pathString = PathString ("")
 
-        let defaultFilesOptions = DefaultFilesOptions ()
-        defaultFilesOptions.RequestPath <- pathString
-        defaultFilesOptions.FileProvider <- fileProvider
-        defaultFilesOptions.DefaultFileNames <- [| "index.html" |]
-
-        let staticFileOptions = StaticFileOptions ()
-        staticFileOptions.RequestPath <- pathString
-        staticFileOptions.FileProvider <- fileProvider
+        // let defaultFilesOptions = DefaultFilesOptions ()
+        // defaultFilesOptions.RequestPath <- pathString
+        // defaultFilesOptions.FileProvider <- fileProvider
+        // defaultFilesOptions.DefaultFileNames <- [| "index.html" |]
+        //
+        // let staticFileOptions = StaticFileOptions ()
+        // staticFileOptions.RequestPath <- pathString
+        // staticFileOptions.FileProvider <- fileProvider
 
         let eventStream = app.ApplicationServices.GetService<Event<string * obj>> ()
 
@@ -79,7 +80,10 @@ type Startup(configuration: IConfiguration) =
 #if DEBUG
         app.UseDeveloperExceptionPage () |> ignore
 #endif
-        app.UseDefaultFiles(defaultFilesOptions).UseStaticFiles (staticFileOptions) |> ignore
+        app
+            // .UseDefaultFiles(defaultFilesOptions)
+            // .UseStaticFiles(staticFileOptions)
+            .UseSpa(fun spa -> spa.UseProxyToSpaDevelopmentServer("http://localhost:8080"))
 
 module Program =
     [<EntryPoint>]

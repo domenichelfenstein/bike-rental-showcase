@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="FSharp.SystemTextJson" Version="1.1.23" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.4" />
     </ItemGroup>
 
     <ItemGroup>

@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     outDir: '../Starter/wwwroot'
-  }
+  },
+  root: './Frontend'
 })
