@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_SubServices", "02_SubSer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_EntryPoint", "03_EntryPoint", "{9548FCCD-D74A-4AD0-9E69-76D43137685A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vue", "Frontend\Vue.esproj", "{63679F4B-64D3-4C3E-8F46-6672642C3AF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.esproj", "{63679F4B-64D3-4C3E-8F46-6672642C3AF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

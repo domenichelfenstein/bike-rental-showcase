@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import Counter from '../Rental/Frontend/RentalTest.vue'
+import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <HelloWorld /> Foo
-  <Counter />
+  <RouterView />
 </template>
-
-<style scoped>
-</style>
