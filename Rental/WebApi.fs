@@ -8,7 +8,7 @@ open FsToolkit.ErrorHandling
 
 [<ApiController>]
 [<Authorize(AuthenticationSchemes = "FakeAuthenticationScheme")>]
-[<Route("rental")>]
+[<Route("api/rental")>]
 type RegistrationApiController(facade: RentalFacade) =
     inherit ControllerBase()
 

@@ -7,7 +7,7 @@ open Microsoft.AspNetCore.Mvc
 
 [<ApiController>]
 [<Authorize(AuthenticationSchemes = "FakeAuthenticationScheme")>]
-[<Route("accounting")>]
+[<Route("api/accounting")>]
 type AccountingController(facade: AccountingFacade) =
     inherit ControllerBase()
 

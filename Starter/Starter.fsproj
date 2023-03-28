@@ -4,9 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <AssemblyName>BikeRental.Starter</AssemblyName>
         <RootNamespace>BikeRental.Starter</RootNamespace>
-
-        <WWWRoot>\wwwroot\</WWWRoot>
-        <Frontend>..\Frontend\</Frontend>
+        <StaticWebAssetsEnabled>true</StaticWebAssetsEnabled>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,10 +26,6 @@
         <Compile Include="Authentication.fs" />
         <Compile Include="WebSocket.fs" />
         <Compile Include="Startup.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <TypeScriptCompile Include="CommonTypes.ts" />
     </ItemGroup>
 
 </Project>

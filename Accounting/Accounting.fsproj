@@ -22,12 +22,10 @@
         <Compile Include="Incoming.fs" />
         <Compile Include="Facade.fs" />
         <Compile Include="WebApi.fs" />
-        <Content Include="Frontend\assets\.gitkeep" />
-        <Content Include="Frontend\deposit.page.scss" />
-        <TypeScriptCompile Include="Frontend\deposit.page.ts" />
-        <TypeScriptCompile Include="Frontend\wallet.component.ts" />
-        <TypeScriptCompile Include="Frontend\userWallet.component.ts" />
-        <TypeScriptCompile Include="Frontend\accounting.module.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Frontend\**" />
     </ItemGroup>
 
     <ItemGroup>

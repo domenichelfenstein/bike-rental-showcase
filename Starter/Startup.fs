@@ -37,8 +37,8 @@ type Startup(configuration: IConfiguration) =
         let parts =
             services.AddControllers().AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add (JsonFSharpConverter ())).PartManager.ApplicationParts
 
-        parts.Add (registrationAssemblyPart)
-        parts.Add (accountingAssemblyPart)
+        parts.Add registrationAssemblyPart
+        parts.Add accountingAssemblyPart
 
         let uiChangedEvent, facades = FacadesCreator.create self.Configuration
 
@@ -52,35 +52,30 @@ type Startup(configuration: IConfiguration) =
         ()
 
     member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
-        let fileProvider =
-            new PhysicalFileProvider (Directory.GetCurrentDirectory () + "/wwwroot")
-
-        let pathString = PathString ("")
-
-        // let defaultFilesOptions = DefaultFilesOptions ()
-        // defaultFilesOptions.RequestPath <- pathString
-        // defaultFilesOptions.FileProvider <- fileProvider
-        // defaultFilesOptions.DefaultFileNames <- [| "index.html" |]
-        //
-        // let staticFileOptions = StaticFileOptions ()
-        // staticFileOptions.RequestPath <- pathString
-        // staticFileOptions.FileProvider <- fileProvider
-
         let eventStream = app.ApplicationServices.GetService<Event<string * obj>> ()
 
-        app
-            .UseRouting()
-            .UseAuthentication()
-            .UseAuthorization()
-            .UseWebSockets()
-            .UseSpa(fun spa -> spa.UseProxyToSpaDevelopmentServer("http://localhost:8080"))
+        app.UseRouting().UseAuthentication().UseAuthorization().UseWebSockets ()
+        |> ignore
+
         app
             .UseEndpoints(fun endpoints -> endpoints.MapControllers () |> ignore)
             .Use (WebSocket.wsMiddleware eventStream.Publish)
         |> ignore
 
 #if DEBUG
-        app.UseDeveloperExceptionPage () |> ignore
+        app
+            .UseDeveloperExceptionPage()
+            .UseSpa (fun spa -> spa.UseProxyToSpaDevelopmentServer "http://localhost:8080")
+#else
+        let fileProvider =
+            new PhysicalFileProvider (Path.Combine (env.ContentRootPath, "wwwroot"))
+
+        app
+            .UseStaticFiles()
+            .UseSpa (fun spa ->
+                spa.Options.SourcePath <- "wwwroot"
+                spa.Options.DefaultPageStaticFileOptions <- StaticFileOptions (FileProvider = fileProvider)
+                spa.Options.DefaultPage <- "/index.html")
 #endif
 
 module Program =

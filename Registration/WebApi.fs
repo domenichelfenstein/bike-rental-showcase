@@ -9,7 +9,7 @@ open BikeRental.Registration
 
 [<ApiController>]
 [<AllowAnonymous>]
-[<Route("registration")>]
+[<Route("api/registration")>]
 type RegistrationApiController(facade: RegistrationFacade) =
     inherit ControllerBase()
 
