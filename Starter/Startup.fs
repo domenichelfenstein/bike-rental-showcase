@@ -73,6 +73,8 @@ type Startup(configuration: IConfiguration) =
             .UseAuthentication()
             .UseAuthorization()
             .UseWebSockets()
+            .UseSpa(fun spa -> spa.UseProxyToSpaDevelopmentServer("http://localhost:8080"))
+        app
             .UseEndpoints(fun endpoints -> endpoints.MapControllers () |> ignore)
             .Use (WebSocket.wsMiddleware eventStream.Publish)
         |> ignore
@@ -80,10 +82,6 @@ type Startup(configuration: IConfiguration) =
 #if DEBUG
         app.UseDeveloperExceptionPage () |> ignore
 #endif
-        app
-            // .UseDefaultFiles(defaultFilesOptions)
-            // .UseStaticFiles(staticFileOptions)
-            .UseSpa(fun spa -> spa.UseProxyToSpaDevelopmentServer("http://localhost:8080"))
 
 module Program =
     [<EntryPoint>]
