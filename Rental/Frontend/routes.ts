@@ -1,11 +1,11 @@
 ﻿import { RouteRecordRaw } from 'vue-router'
-import RentalTest from "./RentalTest.vue";
 import {mustBeLoggedIn} from "../../Frontend/guards";
+import Overview from "./Overview.vue";
 
 const routes: RouteRecordRaw[] = [
     {
         path: 'overview',
-        component: RentalTest,
+        component: Overview,
         beforeEnter: mustBeLoggedIn
     }
 ]

@@ -27,7 +27,7 @@ const formattedBalance = computed(() => balance.value ? `${balance.value.toFixed
 onMounted(async () => {
     const userInfo = getUserInfo();
 
-    const wallet = await authGet<{ walletId: string }>(`accounting/user/${userInfo.getValue().username}/wallet`);
+    const wallet = await authGet<{ walletId: string }>(`accounting/user/${userInfo.getValue().userid}/wallet`);
     if(wallet.ok) {
         const walletDetail = await authGet<WalletDetail>(`accounting/wallet/${wallet.getValue().walletId}`);
         if(walletDetail.ok) {

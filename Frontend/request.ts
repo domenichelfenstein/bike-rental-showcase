@@ -66,8 +66,8 @@ export async function fetchPost<TOut = null, TError = null>(path: string, body: 
 }
 
 export async function authPost<TOut = null, TError = null>(path: string, body: any) : Promise<AppResponse<TOut, TError>> {
-    const token = getToken();
-    return request("POST", path, body, { "Authorization": `Bearer ${token}` });
+    const token = getToken()!;
+    return request("POST", path, body, { "Authorization": token });
 }
 
 export async function fetchGet<TOut = null, TError = null>(path: string) : Promise<AppResponse<TOut, TError>> {
@@ -75,6 +75,6 @@ export async function fetchGet<TOut = null, TError = null>(path: string) : Promi
 }
 
 export async function authGet<TOut = null, TError = null>(path: string) : Promise<AppResponse<TOut, TError>> {
-    const token = getToken();
-    return request("GET", path, undefined, { "Authorization": `Bearer ${token}` });
+    const token = getToken()!;
+    return request("GET", path, undefined, { "Authorization": token });
 }
