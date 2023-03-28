@@ -3,7 +3,7 @@ import StartRegistrationView from "./StartRegistrationView.vue";
 
 const routes: RouteRecordRaw[] = [
     {
-        path: '/registration/start',
+        path: 'start',
         component: StartRegistrationView
     }
 ]
