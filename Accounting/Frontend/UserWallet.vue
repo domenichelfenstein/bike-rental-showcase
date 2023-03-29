@@ -13,6 +13,7 @@
 import {computed, onMounted, ref} from "vue";
 import {getUserInfo} from "../../Frontend/auth";
 import {authGet} from "../../Frontend/request";
+import {listenOnAndTriggerImmediately} from "../../Frontend/websockets";
 
 defineProps({
     clickable: {
@@ -22,17 +23,21 @@ defineProps({
 });
 
 const balance = ref(0);
-const formattedBalance = computed(() => balance.value ? `${balance.value.toFixed(2)} $` : "0.00 $");
+
+const formattedBalance = computed(() => `${balance.value.toFixed(2)} $`);
 
 onMounted(async () => {
     const userInfo = getUserInfo();
 
     const wallet = await authGet<{ walletId: string }>(`accounting/user/${userInfo.getValue().userid}/wallet`);
     if(wallet.ok) {
-        const walletDetail = await authGet<WalletDetail>(`accounting/wallet/${wallet.getValue().walletId}`);
-        if(walletDetail.ok) {
-            balance.value = walletDetail.getValue().balance;
-        }
+        const walletId = wallet.getValue().walletId;
+        listenOnAndTriggerImmediately<any>(walletId, async () => {
+            const walletDetail = await authGet<WalletDetail>(`accounting/wallet/${wallet.getValue().walletId}`);
+            if(walletDetail.ok) {
+                balance.value = walletDetail.getValue().balance;
+            }
+        });
     }
 })
 

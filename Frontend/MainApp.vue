@@ -14,7 +14,7 @@ function logout() {
 
 <template>
     <header>
-        <RouterLink to="/rental/bikes"><h1>Bike rental</h1></RouterLink>
+        <RouterLink to="/rental/overview"><h1>Bike rental</h1></RouterLink>
         <div class="placeholder"></div>
         <div class="dropdown dropdown-right">
             <a class="dropdown-toggle" tabindex="0">
