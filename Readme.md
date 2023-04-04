@@ -10,15 +10,20 @@ Some functions are far from production ready (they are annotated as such). Pleas
 
 ### Prerequisits
 The following software should be installed on your machine:
-- Either Visual Studio or JetBrains Rider (tested with version 2021.2.1)
-- Node JS (tested with version 14.17.0)
+- Either Visual Studio or JetBrains Rider (tested with version 2023.1)
+- Node JS (tested with version 18.13.0)
 
 ### How to start?
-Simply open `BikeRentalExercise.sln` in Visual Studio or JetBrains Rider and run the `Starter` project (In the `03_EntryPoint` folder). From this project
-(and `Startup.fs` in particular) you can navigate yourself through the code.
+Simply run `npm run dev` in the terminal. This will start the backend and the frontend. The frontend will be available at `http://localhost:5001`.
 
-`Starter` contains the web api setup code as well as the glue/adapter-code between the subservices. The frontend counterpart for `Starter` is the `main-frontend-app` folder
-(the frontend gets automagically compiled and started, when you run the `Starter` project).
+### How to navigate through the code?
+#### Backend
+Open `BikeRentalExercise.sln` in Visual Studio or JetBrains Rider and open the `Startup.fs` file in the `Starter` project (the `Starter` project can be found in the `03_EntryPoints` folder).
+This file contains the web api setup code as well as the glue/adapter-code between the subservices.
+
+#### Frontend
+The frontend counterpart for `Startup.fs` is the `main.ts` file in the `Frontend` folder.
+This file contains the vue setup code as well as the glue/adapter-code between the subservices.
 
 `02_Subservices` contains the three services `Registration`, `Accounting` and `Rental`. Here you find the business logic (frontend and backend).
 
