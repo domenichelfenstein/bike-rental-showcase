@@ -15,8 +15,8 @@
                     <p>{{ renderPrice(bike.price) }}</p>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" :disabled="isAvailable(bike)" @click.prevent="rent(bike)">Rent</button>
-                    <button class="btn" v-if="bike.status.Case == 'Releasable'" @click.prevent="release(bike)">Release</button>
+                    <button class="btn btn-primary" :disabled="!isAvailable(bike)" @click.prevent="rent(bike)">Rent</button>
+                    <button class="btn" v-if="bike.status['releasable'] != undefined" @click.prevent="release(bike)">Release</button>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@ function renderPrice(value: number) {
     return value.toFixed(2) + " $";
 }
 function isAvailable(bike: Bike) {
-    return bike.status.Case === "Available";
+    return bike.status == "bookable";
 }
 
 async function rent(bike: Bike) {
@@ -48,8 +48,8 @@ async function rent(bike: Bike) {
 }
 
 async function release(bike: Bike) {
-    const userInfo = getUserInfo();
-    const result = await authPost<any, string>("rental/release", { bookingId: bike.status.Fields[0] });
+    const bookingId = bike.status["releasable"];
+    const result = await authPost<any, string>("rental/release", { bookingId });
     if(!result.ok) {
         error.value = result.getError();
     }
@@ -68,13 +68,13 @@ onMounted(() => {
     })
 });
 
-type AvailabilityStatus = "Bookable" | "NotAvailable" | "Releasable"
+type AvailabilityStatus = "bookable" | "notAvailable" | { "releasable": string }
 type Bike = {
     bikeId: string
     name: string
     manufacturer: string
     price: number
-    status: { "Case": AvailabilityStatus, "Fields"?: [string] }
+    status: AvailabilityStatus
     base64Image: string
 }
 </script>

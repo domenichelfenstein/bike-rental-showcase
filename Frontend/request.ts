@@ -36,28 +36,29 @@ export class AppResponse<TOut = null, TError = null> {
 }
 
 async function request<TOut = null, TIn = null, TError = null>(method: "POST" | "GET", path: string, body: TIn | undefined, headers: HeadersInit | undefined) : Promise<AppResponse<TOut, TError>> {
-    try {
-        const currentDomainWithPort = window.location.host;
-        const url = `http://${currentDomainWithPort}/api/${path}`;
-        const response = await fetch(
-            url,
-            {
-                method: method,
-                body: body != undefined ? JSON.stringify(body) : undefined,
-                headers: mergeHeaders(headers)
-            });
+    const currentDomainWithPort = window.location.host;
+    const url = `http://${currentDomainWithPort}/api/${path}`;
+    const response = await fetch(
+        url,
+        {
+            method: method,
+            body: body != undefined ? JSON.stringify(body) : undefined,
+            headers: mergeHeaders(headers)
+        })
+        .catch(error => {
+            console.log(error);
+            return error;
+        });
 
+
+    if(response.status == 200) {
         const json = await response.json();
-        if(json.Case == "Ok") {
-            return AppResponse.Ok(json.Fields[0]);
-        } else if (json.Case == "Error") {
-            return AppResponse.Error(json.Fields[0].Case);
-        } else {
-            return AppResponse.Ok(json);
-        }
-    } catch (error) {
-        console.warn("http response", error);
-        return AppResponse.Error(<TError>error);
+        return AppResponse.Ok(json);
+    } else if(response.status == 400) {
+        const json = await response.json();
+        return AppResponse.Error(json);
+    } else {
+        throw new Error("Unknown error");
     }
 }
 

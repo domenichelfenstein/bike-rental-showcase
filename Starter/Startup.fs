@@ -2,6 +2,7 @@ namespace BikeRental.Starter
 
 open System
 open System.IO
+open System.Text.Json
 open System.Text.Json.Serialization
 open BikeRental.Registration
 open BikeRental.Accounting
@@ -20,6 +21,27 @@ open Microsoft.Extensions.Hosting
 open Microsoft.AspNetCore.SpaServices
 
 type Startup(configuration: IConfiguration) =
+    let jsonFSharpConverter = JsonFSharpConverter(JsonFSharpOptions()
+                                .WithUnionExternalTag()
+                                .WithUnionNamedFields()
+                                .WithUnwrapOption()
+                                .WithUnionUnwrapFieldlessTags()
+                                .WithUnionUnwrapSingleCaseUnions()
+                                .WithUnionUnwrapSingleFieldCases()
+                                .WithUnionUnwrapRecordCases()
+                                .WithUnionTagNamingPolicy(JsonNamingPolicy.CamelCase)
+                                .WithUnionFieldNamingPolicy(JsonNamingPolicy.CamelCase)
+                                .WithUnionTagCaseInsensitive()
+                                .WithIncludeRecordProperties()
+                                .WithUnionAllowUnorderedTag())
+    let serializerOptions = JsonSerializerOptions JsonSerializerDefaults.Web
+    let applyCustomSerializerOptions (serializerOptions: JsonSerializerOptions) =
+        serializerOptions.PropertyNameCaseInsensitive <- false
+        serializerOptions.PropertyNamingPolicy <- JsonNamingPolicy.CamelCase
+        serializerOptions.Converters.Add(jsonFSharpConverter)
+
+    do applyCustomSerializerOptions(serializerOptions)
+
     member _.Configuration = configuration
 
     member self.ConfigureServices(services: IServiceCollection) =
@@ -30,7 +52,9 @@ type Startup(configuration: IConfiguration) =
 
         services.AddAuthorization () |> ignore
 
-        services.AddControllers().AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add (JsonFSharpConverter ())) |> ignore
+        services
+            .AddControllers(fun options -> options.OutputFormatters.Insert(0, FSharpResultOutputFormatter(serializerOptions)))
+            .AddJsonOptions(fun options -> applyCustomSerializerOptions(options.JsonSerializerOptions)) |> ignore
 
         let uiChangedEvent, facades = FacadesCreator.create self.Configuration
 
@@ -51,7 +75,7 @@ type Startup(configuration: IConfiguration) =
 
         app
             .UseEndpoints(fun endpoints -> endpoints.MapControllers () |> ignore)
-            .Use (WebSocket.wsMiddleware eventStream.Publish)
+            .Use (WebSocket.wsMiddleware serializerOptions eventStream.Publish)
         |> ignore
 
 #if DEBUG

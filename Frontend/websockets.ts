@@ -9,16 +9,16 @@ function getWebSocket(userId: string) {
     return changeRefs[userId];
 }
 
-export function listenOn<T>(userId: string, callback: (newValue: BackendChange<T>) => void) {
-    if(userId == undefined) {
-        throw new Error("userId is undefined");
+export function listenOn<T>(eventName: string, callback: (newValue: BackendChange<T>) => void) {
+    if(eventName == undefined) {
+        throw new Error("eventName is undefined");
     }
 
-    const webSocket = getWebSocket(userId);
+    const webSocket = getWebSocket(eventName);
     webSocket.addEventListener("message", (event: MessageEvent<string>) => {
-        console.debug("event", userId, event.data);
+        console.debug("event", eventName, event.data);
         const json = JSON.parse(event.data);
-        callback(new BackendChange(json.userId, <T>json.data));
+        callback(new BackendChange(json.userId, <T>json));
     })
 }
 

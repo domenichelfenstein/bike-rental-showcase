@@ -11,12 +11,9 @@ open FSharp.Control.Tasks
 open Microsoft.AspNetCore.Http
 
 module WebSocket =
-    let serialize (input: 'a) =
-        let options = JsonSerializerOptions()
-        options.Converters.Add(JsonFSharpConverter())
-        JsonSerializer.Serialize(input, options)
-
-    let sendWebSocketMessageOnEvent (webSocket: WebSocket) (eventStream: IEvent<string * obj>) filterGuid =
+    let sendWebSocketMessageOnEvent (options: JsonSerializerOptions) (webSocket: WebSocket) (eventStream: IEvent<string * obj>) filterGuid =
+        let serialize (input: 'a) =
+            JsonSerializer.Serialize(input, options)
         task {
             let rec waitForEvent () =
                 task {
@@ -49,7 +46,7 @@ module WebSocket =
             do! waitForEvent ()
         }
 
-    let wsMiddleware (eventStream: IEvent<string * obj>) (context: HttpContext) (next: Func<Task>) =
+    let wsMiddleware (options: JsonSerializerOptions) (eventStream: IEvent<string * obj>) (context: HttpContext) (next: Func<Task>) =
         task {
             if
                 context.WebSockets.IsWebSocketRequest
@@ -60,7 +57,7 @@ module WebSocket =
 
                 do!
                     id
-                    |> sendWebSocketMessageOnEvent webSocket eventStream
+                    |> sendWebSocketMessageOnEvent options webSocket eventStream
             else
                 do! next.Invoke()
         }

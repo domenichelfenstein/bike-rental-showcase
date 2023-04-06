@@ -25,6 +25,7 @@
         <Compile Include="FacadesCreator.fs" />
         <Compile Include="Authentication.fs" />
         <Compile Include="WebSocket.fs" />
+        <Compile Include="FSharpResultFormatter.fs" />
         <Compile Include="Startup.fs" />
     </ItemGroup>
 
