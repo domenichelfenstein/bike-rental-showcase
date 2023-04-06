@@ -30,15 +30,7 @@ type Startup(configuration: IConfiguration) =
 
         services.AddAuthorization () |> ignore
 
-        let registrationAssemblyPart = typeof<RegistrationFacade>.Assembly |> AssemblyPart
-
-        let accountingAssemblyPart = typeof<AccountingId>.Assembly |> AssemblyPart
-
-        let parts =
-            services.AddControllers().AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add (JsonFSharpConverter ())).PartManager.ApplicationParts
-
-        parts.Add registrationAssemblyPart
-        parts.Add accountingAssemblyPart
+        services.AddControllers().AddJsonOptions(fun options -> options.JsonSerializerOptions.Converters.Add (JsonFSharpConverter ())) |> ignore
 
         let uiChangedEvent, facades = FacadesCreator.create self.Configuration
 
@@ -51,7 +43,7 @@ type Startup(configuration: IConfiguration) =
 
         ()
 
-    member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
+    member _.Configure(app: IApplicationBuilder, _env: IWebHostEnvironment) =
         let eventStream = app.ApplicationServices.GetService<Event<string * obj>> ()
 
         app.UseRouting().UseAuthentication().UseAuthorization().UseWebSockets ()
