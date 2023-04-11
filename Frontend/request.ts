@@ -37,7 +37,8 @@ export class AppResponse<TOut = null, TError = null> {
 
 async function request<TOut = null, TIn = null, TError = null>(method: "POST" | "GET", path: string, body: TIn | undefined, headers: HeadersInit | undefined) : Promise<AppResponse<TOut, TError>> {
     const currentDomainWithPort = window.location.host;
-    const url = `http://${currentDomainWithPort}/api/${path}`;
+    const currentProtocol = window.location.protocol.split(":")[0];
+    const url = `${currentProtocol}://${currentDomainWithPort}/api/${path}`;
     const response = await fetch(
         url,
         {

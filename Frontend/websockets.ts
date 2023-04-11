@@ -3,7 +3,8 @@ const changeRefs: { [userId: string]: WebSocket } = {};
 function getWebSocket(userId: string) {
     if(changeRefs[userId] == undefined) {
         const currentDomainWithPort = window.location.host;
-        changeRefs[userId] = new WebSocket(`ws://${currentDomainWithPort}/ws/id/${userId}`);
+        const currentProtocol = window.location.protocol.split(":")[0] == "https" ? "wss" : "ws";
+        changeRefs[userId] = new WebSocket(`${currentProtocol}://${currentDomainWithPort}/ws/id/${userId}`);
     }
 
     return changeRefs[userId];
