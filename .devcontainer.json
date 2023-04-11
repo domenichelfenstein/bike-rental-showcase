@@ -1,6 +1,17 @@
 {
+    "name": "bike-showcase",
     "image": "mcr.microsoft.com/devcontainers/dotnet:7.0-jammy",
     "features": {
         "ghcr.io/devcontainers/features/node:1": {}
+    },
+    "postCreateCommand": "npm ci && dotnet restore",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+				"Ionide.Ionide-fsharp",
+				"Vue.volar",
+				"Vue.vscode-typescript-vue-plugin"
+			]
+        }
     }
 }
