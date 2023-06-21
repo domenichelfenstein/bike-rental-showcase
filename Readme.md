@@ -1,7 +1,7 @@
 # F# Domain Driven Design Showcase
 
 I've been inspired by the [DDD-To-The-Code Workshop - Sample Code](https://github.com/cstettler/ddd-to-the-code-workshop-sample) by Christian Stettler
-to create a similar example (roughly the same task) but this time written in F# and with an Angular frontend.
+to create a similar example (roughly the same task) but this time written in F# and with an Angular frontend (I've later changed it to vue, because why not :D).
 
 This showcase demonstrates how I would tackle such an exercise.
 
