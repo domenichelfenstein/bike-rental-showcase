@@ -30,7 +30,7 @@ This file contains the vue setup code as well as the glue/adapter-code between t
 ### Why not simply use SignalR?
 Because I wanted to learn to write this aspect of the application by myself and because it's not that hard (as long as it doesn't have to scale) to tinker a bit with WebSockets.
 
-### You're a self-claimed TDD and Developer-Test advocate. Why are there so few tests?
+### You're a self proclaimed TDD and Developer-Test advocate. Why are there so few tests?
 Actually there are probably more tests then it first seems: F# provides us with such a strong type system that many tests are embedded in these types.
 
 Another aspect is the use of types such as `Result` in combination with the corresponding computational expression: Using this combination it is quite hard to write defective code.
