@@ -67,7 +67,7 @@ type Startup(configuration: IConfiguration) =
 
         ()
 
-    member _.Configure(app: IApplicationBuilder, _env: IWebHostEnvironment) =
+    member _.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
         let eventStream = app.ApplicationServices.GetService<Event<string * obj>> ()
 
         app.UseRouting().UseAuthentication().UseAuthorization().UseWebSockets ()
