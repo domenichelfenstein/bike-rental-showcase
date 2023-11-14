@@ -3,6 +3,8 @@ bin/
 obj/
 dist/
 /packages/
+/node_modules/
+/.package-lock.json
 riderModule.iml
 /_ReSharper.Caches/
 node_modules/
