@@ -16,16 +16,17 @@ type FSharpResultOutputFormatter(serializerOptions: JsonSerializerOptions) =
 
     do
         base.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("application/json"))
-        base.SupportedEncodings.Add(Encoding.UTF8);
-        base.SupportedEncodings.Add(Encoding.Unicode);
+        base.SupportedEncodings.Add(Encoding.UTF8)
+        base.SupportedEncodings.Add(Encoding.Unicode)
 
     override this.CanWriteType(typ: Type) =
-        typ.IsGenericType && typ.GetGenericTypeDefinition() = typedefof<Result<_,_>>
+        typ.IsGenericType && typ.GetGenericTypeDefinition() = typedefof<Result<_, _>>
 
     override this.WriteResponseBodyAsync(context: OutputFormatterWriteContext, _encoding: Encoding) =
         task {
             if context = null then
                 ArgumentNullException("context") |> raise
+
             let response = context.HttpContext.Response
 
             let result = context.Object
@@ -47,4 +48,5 @@ type FSharpResultOutputFormatter(serializerOptions: JsonSerializerOptions) =
             // Serialize the F# Result as JSON and write it to the response body
             let json = JsonSerializer.Serialize(bodyContent, serializerOptions)
             do! response.WriteAsync(json)
-        } :> Task
+        }
+        :> Task

@@ -5,6 +5,4 @@ open BikeRental
 
 module Services =
     let getInstant () =
-        DateTime.UtcNow
-        |> NodaTime.Instant.FromDateTimeUtc
-        |> Instant
+        DateTime.UtcNow |> NodaTime.Instant.FromDateTimeUtc |> Instant
