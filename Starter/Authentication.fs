@@ -9,7 +9,7 @@ open Microsoft.AspNetCore.Http
 module FakeAuthentication =
     let FakeSchemeName = "FakeAuthenticationScheme"
 
-    type FakeAuthenticationHandler(options, logger, encoder, clock) =
+    type FakeAuthenticationHandler (options, logger, encoder, clock) =
         inherit AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder, clock)
 
         override this.HandleAuthenticateAsync() =
@@ -28,11 +28,9 @@ module FakeAuthentication =
 
                                 let identity =
                                     ClaimsIdentity(
-                                        [
-                                            Claim("username", Array.get parts 1)
-                                            Claim("userid", Array.get parts 2)
-                                        ],
-                                        this.Scheme.Name)
+                                        [ Claim("username", Array.get parts 1); Claim("userid", Array.get parts 2) ],
+                                        this.Scheme.Name
+                                    )
 
                                 let principal = System.Security.Principal.GenericPrincipal(identity, null)
                                 let ticket = AuthenticationTicket(principal, this.Scheme.Name)

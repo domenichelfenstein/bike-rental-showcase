@@ -1,7 +1,7 @@
 const changeRefs: { [userId: string]: WebSocket } = {};
 
 function getWebSocket(userId: string) {
-    if(changeRefs[userId] == undefined) {
+    if (changeRefs[userId] == undefined) {
         const currentDomainWithPort = window.location.host;
         const currentProtocol = window.location.protocol.split(":")[0] == "https" ? "wss" : "ws";
         changeRefs[userId] = new WebSocket(`${currentProtocol}://${currentDomainWithPort}/ws/id/${userId}`);
@@ -11,7 +11,7 @@ function getWebSocket(userId: string) {
 }
 
 export function listenOn<T>(eventName: string, callback: (newValue: BackendChange<T>) => void) {
-    if(eventName == undefined) {
+    if (eventName == undefined) {
         throw new Error("eventName is undefined");
     }
 
@@ -29,5 +29,6 @@ export function listenOnAndTriggerImmediately<T>(userId: string, callback: (newV
 }
 
 export class BackendChange<T> {
-    constructor(public userId: string, public data: T) { }
+    constructor(public userId: string, public data: T) {
+    }
 }

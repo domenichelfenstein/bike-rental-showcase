@@ -14,8 +14,9 @@ module Fakes =
         async { printfn $"Verification Code for {phone}: {code}" }
 
     let hashPassword (input: string) =
-        let fromBytes (data : byte array) =
+        let fromBytes (data: byte array) =
             use md5 = MD5.Create()
+
             (StringBuilder(), md5.ComputeHash(data))
             ||> Array.fold (fun sb b -> sb.Append(b.ToString("x2")))
             |> string

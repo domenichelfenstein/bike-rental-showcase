@@ -8,13 +8,13 @@ module Example =
         static member Instant() =
             Arb.generate<System.DateTime>
             |> Gen.map (fun dt -> dt.ToUniversalTime())
-            |> Gen.map (fun dt -> NodaTime.Instant.FromDateTimeUtc dt)
+            |> Gen.map NodaTime.Instant.FromDateTimeUtc
             |> Arb.fromGen
 
     let createWithSeed<'a> seedNr =
-        do Arb.register<NodaGenerator>() |> ignore
+        do Arb.register<NodaGenerator> () |> ignore
         let gen = Arb.generate<'a>
-        let seed = Random.StdGen (seedNr, seedNr)
+        let seed = Random.StdGen(seedNr, seedNr)
         Gen.eval 1 seed gen
 
     let create<'a> () =

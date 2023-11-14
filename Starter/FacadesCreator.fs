@@ -14,7 +14,7 @@ type Facades =
 
 module Adapters =
     let createWallet (facade: AccountingFacade) userId =
-        facade.CreateWallet(Guid.NewGuid() |> WalletId) { CreateWallet.Data.UserId = userId }
+        facade.CreateWallet (Guid.NewGuid() |> WalletId) { CreateWallet.Data.UserId = userId }
 
     let withdrawFromUserBalance (facade: AccountingFacade) amount userId =
         async {
